@@ -1,2 +1,0 @@
-DROP DATABASE IF EXISTS TeamGoat_db;
-CREATE DATABASE TeamGoat_db;
