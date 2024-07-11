@@ -1,6 +1,10 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import LogoGoatHead from "../assets/images/logoGoatHead.png";
 import '../styles/navAndFooter.css';
+
+const loggedIn = false;
 
 function Navbar() {
     return (
@@ -9,11 +13,11 @@ function Navbar() {
             <nav id="navbar" className="navbar navbar-expand-md">
                 <div className="container-fluid">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                        </svg>
-                    </span>
+                        <span className="navbar-toggler-icon">
+                            {/* <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
+                                <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                            </svg> */}
+                        </span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <a className="navbar-brand" href="/">
@@ -48,24 +52,23 @@ function Navbar() {
                         </li>
                     </ul>
                     </div>
-                    {/* <div>
-                    <!-- If the customer is logged in, show a logout button -->
-                    {{#if loggedIn}}
+                    <div>
+                    {loggedIn ? (
                     <button className="mx-2 fs-5 nav-link" id="logout">
                         <svg className="mb-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                         </svg>
-                        Logout</button>
-                    {{else}}
-                    <!-- Otherwise, show a link to login -->
+                        Logout
+                    </button>
+                    ) : (
                     <a className="mx-2 fs-5 nav-link" href="/login">
                         <svg className="mb-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                         </svg>
-                        Login</a>
-                    {{/if}}
+                        Login
                     </a>
-                    </div> */}
+                    )}
+                    </div>
                 </div>
             </nav>
         </header>
