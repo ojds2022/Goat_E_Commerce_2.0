@@ -7,19 +7,12 @@ const secret = process.env.SECRET || 'mysecretsshhhhh';
 // Token expiration time
 const expiration = '2h';
 
-
-
 module.exports = {
-
-    AuthenticationError: new GraphQLError('Could not authenticate user.', {
-        extensions: {
-          code: 'UNAUTHENTICATED',
-        },
-      }),
-
-
-
-
+  AuthenticationError: new GraphQLError('Could not authenticate user.', {
+      extensions: {
+        code: 'UNAUTHENTICATED',
+      },
+    }),
   // Function to sign a JWT with customer information
   signToken: function ({ first_name, last_name, email_address, _id }) {
     // Payload containing the customer's first name, last name, email, and ID

@@ -3,34 +3,41 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // Define a schema for the Customer model with various fields and their constraints
-const customerSchema = new Schema({
-  first_name: {
-    type: String,
-    required: true,
-    maxlength: 30,
+const customerSchema = new Schema(
+  {
+    first_name: {
+      type: String,
+      required: true,
+      maxlength: 30,
+    },
+    last_name: {
+      type: String,
+      required: true,
+      maxlength: 30,
+    },
+    email_address: {
+      type: String,
+      required: true,
+      unique: true,
+      maxlength: 50,
+    },
+    password: {
+      type: String,
+      required: true,
+      maxlength: 255,
+    },
+    session_id: String,
+    created_date: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  last_name: {
-    type: String,
-    required: true,
-    maxlength: 30,
-  },
-  email_address: {
-    type: String,
-    required: true,
-    unique: true,
-    maxlength: 50,
-  },
-  password: {
-    type: String,
-    required: true,
-    maxlength: 255,
-  },
-  session_id: String,
-  created_date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 
 // Before saving a new or modified customer, hash the password
 customerSchema.pre('save', async function (next) {

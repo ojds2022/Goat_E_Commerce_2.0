@@ -1,6 +1,6 @@
 // Import the necessary models and utility functions
 const { Customer, Product, TransactionMain, TransactionDetail } = require('../models');
-const { signToken } = require('../utils/auth');
+const { signToken, AuthenticationError } = require('../utils/auth');
 const bcrypt = require('bcrypt');
 
 const resolvers = {
