@@ -49,29 +49,26 @@ const resolvers = {
   },
   // Define the Mutation resolvers
   Mutation: {
-    // Add a new customer
-    // Example usage: mutation { addCustomer(first_name: "John", last_name: "Doe", email_address: "john.doe@example.com", password: "password123") { token, customer { _id, first_name, last_name, email_address } } }
-    addCustomer: async (parent, args) => {
-      const customer = await Customer.create(args);
+    addUser: async (parent, { firstName, lastName, email, password }) => {
+      const customer = await Customer.create({ firstName, lastName , email, password });
       const token = signToken(customer);
       return { token, customer };
     },
-    // Customer login
-    // Example usage: mutation { login(email_address: "john.doe@example.com", password: "password123") { token, customer { _id, first_name, last_name, email_address } } }
-    login: async (parent, { email_address, password }) => {
-      const customer = await Customer.findOne({ email_address });
+    login: async (parent, { email, password }) => {
+      const customer = await Customer.findOne({ email });
 
       if (!customer) {
-        throw new AuthenticationError('Incorrect email or password');
+        throw AuthenticationError;
       }
 
-      const validPassword = await bcrypt.compare(password, customer.password);
+      const correctPw = await customer.isCorrectPassword(password);
 
-      if (!validPassword) {
-        throw new AuthenticationError('Incorrect email or password');
+      if (!correctPw) {
+        throw AuthenticationError;
       }
 
       const token = signToken(customer);
+
       return { token, customer };
     },
     // Add a new product
