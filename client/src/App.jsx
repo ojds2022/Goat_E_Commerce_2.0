@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from './pages/Login';
-// import Signup from './pages/Signup';
+import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Products from './pages/Products';
@@ -50,6 +50,7 @@ export default function App() {
           <Navbar />
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route exact path="/" element={<Products />} />
             <Route exact path="/product/:productId" element={<ProductDetails />} />
             <Route path="/shoppingCart" element={<ShoppingCart />} />
@@ -61,5 +62,3 @@ export default function App() {
     </div>
   );
 }
-
-// <Route path="/signup" element={<Signup />} />
