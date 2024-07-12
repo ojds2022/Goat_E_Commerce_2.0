@@ -3,10 +3,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import LogoGoatHead from "../assets/images/logoGoatHead.png";
 import '../styles/navAndFooter.css';
+import Auth from '../utils/auth';
+import { Link } from 'react-router-dom';
 
 const loggedIn = false;
 
 function Navbar() {
+    const logout = (event) => {
+        event.preventDefault();
+        Auth.logout();
+    };
     return (
         <>
         <header className="mb-3">
@@ -53,21 +59,23 @@ function Navbar() {
                     </ul>
                     </div>
                     <div>
-                    {loggedIn ? (
-                    <button className="mx-2 fs-5 nav-link" id="logout">
-                        <svg className="mb-1 bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                        </svg>
-                        Logout
-                    </button>
-                    ) : (
-                    <a className="mx-2 fs-5 nav-link" href="/login">
-                        <svg className="mb-1 bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                        </svg>
-                        Login
-                    </a>
-                    )}
+                        {Auth.loggedIn() ? (
+                            <>
+                                <span>Hey there, {Auth.getProfile().data.firstName}!</span>
+                                <button className="btn btn-lg btn-light m-2" onClick={logout}>
+                                    Logout
+                                </button>
+                                </>
+                                ) : (
+                                <>
+                                <Link className="btn btn-lg btn-info m-2" to="/login">
+                                    Login
+                                </Link>
+                                <Link className="btn btn-lg btn-light m-2" to="/signup">
+                                    Signup
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </nav>

@@ -17,11 +17,13 @@ const server = new ApolloServer({
 
 const startApolloServer = async () => {
   await server.start();
-  
+
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   
-  app.use('/graphql', expressMiddleware(server));
+  app.use('/graphql', expressMiddleware(server, {
+    context: authMiddleware
+  }));
 
   // if we're in production, serve client/dist as static assets
   if (process.env.NODE_ENV === 'production') {
