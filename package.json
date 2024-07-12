@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
+    "dev": "vite",
     "start": "node server/server.js",
     "seed": "node seeds/seed.js",
     "client": "cd client && vite",
