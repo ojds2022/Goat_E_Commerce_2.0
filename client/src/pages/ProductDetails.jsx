@@ -24,31 +24,31 @@ export default function ProductDetails() {
     return (
         <>
         {loggedIn ? (
-            <section class="product text-center">
+            <section className="product text-center">
                 <img src={product[0].image} alt={product[0].name} height="400" width="400" id="product-image" />
-                <div class="product-details">
+                <div className="product-details">
                     <h4 id="product-name">{product[0].name}</h4>
                     <h5 id="product-description">{product[0].description}</h5>
                     <h6 id="product-price">Cost: ${product[0].price}</h6>
-                    <form class="product-bought mx-auto" style={{width: "25%"}}>
+                    <form className="product-bought mx-auto" style={{width: "25%"}}>
                         <input type="number" style={{width: "4em"}} id="product-quantity" placeholder="0"/>
-                        <button type="submit" class="btn btn-warning btn-sm mt-2">ADD</button>
+                        <button type="submit" className="btn btn-warning btn-sm mt-2">ADD</button>
                     </form>
                 </div>
             </section>
         ) : (
-            <section class="product text-center">
+            <section className="product text-center">
                 <img src={product[0].image} alt={product[0].name} height="400" width="400" id="product-image" />
-                <div class="product-details">
+                <div className="product-details">
                     <h4 id="product-name">{product[0].name}</h4>
                     <h5 id="product-description">{product[0].description}</h5>
                     <h6 id="product-price">Login to view price</h6>
-                    <form class="product-bought mx-auto" style={{width: "25%"}}>
+                    <form className="product-bought mx-auto" style={{width: "25%"}}>
                         <input type="number" style={{width: "4em"}} id="product-quantity" placeholder="0"/>
-                        <button type="submit" class="btn btn-warning btn-sm mt-2">ADD</button>
+                        <button type="submit" className="btn btn-warning btn-sm mt-2">ADD</button>
                     </form>
                 </div>
-                <p class="d-none" id="customerID">{customer_id}</p>
+                <p className="d-none" id="customerID">{customer_id}</p>
             </section>
         )}
         </>
