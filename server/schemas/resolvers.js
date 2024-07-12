@@ -7,14 +7,14 @@ const resolvers = {
   // Define the Query resolvers
   Query: {
     // Get all customers
-    // Example usage: query { customers { _id, first_name, last_name, email_address } }
+    // Example usage: query { customers { _id, firstName, lastName, email } }
     customers: async () => {
       return Customer.find();
     },
     // Get a customer by ID
-    // Example usage: query { customer(_id: "60d0fe4f5311236168a109ca") { _id, first_name, last_name, email_address } }
-    customer: async (parent, { _id }) => {
-      return Customer.findById(_id);
+    // Example usage: query { customer(email) { _id, firstName, lastName, email } }
+    customer: async (parent, { email }) => {
+      return Customer.findOne({ email });
     },
     // Get all products
     // Example usage: query { products { _id, product_name, price, product_url } }
