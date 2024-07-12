@@ -1,10 +1,11 @@
 import React from "react";
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const Login = (props) => {
+export default function Login() {
     const [formState, setFormState] = useState({ email: '', password: '' });
     const [login, { error, data }] = useMutation(LOGIN_USER);
   
@@ -40,6 +41,7 @@ const Login = (props) => {
     };
   
     return (
+      <> 
       <main className="flex-row justify-center mb-4">
         <div className="col-12 col-lg-10">
           <div className="card">
@@ -87,8 +89,8 @@ const Login = (props) => {
           </div>
         </div>
       </main>
+      </>
     );
   };
   
-  export default Login;
   
