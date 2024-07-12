@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import LogoGoatHead from "../assets/images/logoGoatHead.png";
 import '../styles/navAndFooter.css';
+// import Auth from '../../utils/auth';
 
 const loggedIn = false;
 
