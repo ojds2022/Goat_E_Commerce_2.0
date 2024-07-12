@@ -1,39 +1,62 @@
 [
   {
-    "first_name" : "Gagan",
-    "last_name" : "Singh",
-    "email_address" : "gaganjitv@gmail.com",
-    "password" : "TeamGoat"
+    "firstName": "Brian",
+    "lastName": "Kernighan",
+    "email": "bkernighan@techfriends.dev",
+    "password": "password01"
   },
   {
-    "first_name" : "Gary",
-    "last_name" : "Wu",
-    "email_address" : "garykachunwu@gmail.com",
-    "password" : "TeamGoat"
+    "firstName": "Max",
+    "lastName": "Kanat-Alexander",
+    "email": "mkanatalexander@techfriends.dev",
+    "password": "password02"
   },
   {
-    "first_name" : "Felix",
-    "last_name" : "Tang", 
-    "email_address" : "fsmunozteng@gmail.com",
-    "password" : "TeamGoat"
+    "firstName": "Lucky",
+    "lastName": "Stiff",
+    "email": "wtls@techfriends.dev",
+    "password": "password03"
   },
   {
-    "first_name" : "Saim",
-    "last_name" : "Diaz",
-    "email_address" : "odiazstrandberg@gmail.com",
-    "password" : "TeamGoat"
+    "firstName": "Kent",
+    "lastName": "Beck",
+    "email": "kbeck@techfriends.dev",
+    "password": "password04"
   },
   {
-    "first_name" : "Romulo",
-    "last_name" : "Apostol",
-    "email_address" : "romuloapostol@gmail.com",
-    "password" : "TeamGoat"
+    "firstName": "Edward",
+    "lastName": "Berard",
+    "email": "evberard@techfriends.dev",
+    "password": "password05"
   },
   {
-    "first_name" : "Yong",
-    "last_name" : "Yun",
-    "email_address" : "yongwooyun@hotmail.com",
-    "password" : "TeamGoat"
+    "firstName": "Alan",
+    "lastName": "Kay",
+    "email": "akay@techfriends.dev",
+    "password": "password06"
+  },
+  {
+    "firstName": "C.A.R.",
+    "lastName": "Hoare",
+    "email": "choare@techfriends.dev",
+    "password": "password07"
+  },
+  {
+    "firstName": "David",
+    "lastName": "Thomas",
+    "email": "dthomas@techfriends.dev",
+    "password": "password08"
+  },
+  {
+    "firstName": "Donald",
+    "lastName": "Knuth",
+    "email": "dknuth@techfriends.dev",
+    "password": "password09"
+  },
+  {
+    "firstName": "Lernantino",
+    "lastName": "Amelio",
+    "email": "lernantino@techfriends.dev",
+    "password": "password10"
   }
-
 ]
