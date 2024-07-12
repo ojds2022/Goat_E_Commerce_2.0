@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start": "node server/server.js",
-    "seed": "node seeds/seed.js",
+    "seed": "node server/seeds/seed.js",
     "client": "cd client && vite",
     "develop": "concurrently \"npm run start\" \"npm run client\"",
     "render-build": "npm install && npm run build",

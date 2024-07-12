@@ -11,9 +11,9 @@ const signupFormHandler = async (event) => {
     const response = await fetch('/api/customer', {
       method: 'POST',
       body: JSON.stringify({ 
-        first_name: firstName, 
-        last_name: lastName, 
-        email_address: email, 
+        firstName: firstName, 
+        lastName: lastName, 
+        email: email, 
         password: password }),
       headers: { 'Content-Type': 'application/json' },
     });
