@@ -1,9 +1,9 @@
-import Login from './components/Login';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Products from './components/Products';
-import ShoppingCart from './components/ShoppingCart';
-import PurchaseHistory from './components/PurchaseHistory';
+import Login from './src/components/Login';
+import Navbar from './src/components/Navbar';
+import Footer from './src/components/Footer';
+import Products from './src/components/Products';
+import ShoppingCart from './src/components/ShoppingCart';
+import PurchaseHistory from './src/components/PurchaseHistory';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
