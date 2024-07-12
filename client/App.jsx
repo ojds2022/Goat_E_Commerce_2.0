@@ -1,10 +1,11 @@
-import Login from './src/components/Login';
-import Navbar from './src/components/Navbar';
-import Footer from './src/components/Footer';
-import Products from './src/components/Products';
-import ShoppingCart from './src/components/ShoppingCart';
-import PurchaseHistory from './src/components/PurchaseHistory';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from './pages/Login';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
+import ShoppingCart from './pages/ShoppingCart';
+import PurchaseHistory from './pages/PurchaseHistory';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,6 +18,7 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route exact path="/" element={<Products />} />
+          <Route exact path="/product/:productId" element={<ProductDetails />} />
           <Route path="/shoppingCart" element={<ShoppingCart />} />
           <Route path="/orderMain" element={<PurchaseHistory />} />
         </Routes>
