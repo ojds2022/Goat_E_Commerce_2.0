@@ -10,6 +10,10 @@ import PurchaseHistory from './pages/PurchaseHistory';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { useQuery } from "@apollo/client";
+import { GET_CUSTOMERS, GET_CUSTOMER_BY_ID, GET_PRODUCTS } from "./utils/queries";
+import { useEffect } from "react";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -43,6 +47,21 @@ const client = new ApolloClient({
 });
 
 export default function App() {
+
+// // testing purposes
+// const {data} = useQuery(GET_CUSTOMERS);
+
+// useEffect(() => {
+//   console.log('here is some data: ', data);
+// }, [data])
+
+// const {data: customer} = useQuery(GET_CUSTOMER_BY_ID, {variables: {_id: "6691aab4bd28d011c8fbcbea"}});
+
+// useEffect(() => {
+//   console.log('here is single customer data: ', customer);
+// }, [customer])
+
+
   return (
     <div className="App">
       <ApolloProvider client={client}>
