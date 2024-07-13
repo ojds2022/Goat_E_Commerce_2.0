@@ -5,12 +5,12 @@ const bcrypt = require('bcrypt');
 // Define a schema for the Customer model with various fields and their constraints
 const customerSchema = new Schema(
   {
-    firstName: {
+    first_name: {
       type: String,
       required: true,
       maxlength: 30,
     },
-    lastName: {
+    last_name: {
       type: String,
       required: true,
       maxlength: 30,
@@ -49,7 +49,7 @@ customerSchema.pre('save', async function (next) {
 });
 
 // Method to check if the provided password matches the hashed password
-customerSchema.methods.checkPassword = function (password) {
+customerSchema.methods.isCorrectPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
