@@ -7,6 +7,8 @@ import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import ShoppingCart from './pages/ShoppingCart';
 import PurchaseHistory from './pages/PurchaseHistory';
+import OrderDetails from './pages/orderDetails';
+import OrderHistory from './pages/OrderHistory'; 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -64,19 +66,21 @@ export default function App() {
 
   return (
     <div className="App">
-      <ApolloProvider client={client}>
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route exact path="/" element={<Products />} />
-            <Route exact path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/shoppingCart" element={<ShoppingCart />} />
-            <Route path="/orderMain" element={<PurchaseHistory />} />
+      <ApolloProvider  client={client} >
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route exact path="/" element={<Products />} />
+              <Route exact path="/product/:productId" element={<ProductDetails />} />
+              <Route path="/shoppingCart" element={<ShoppingCart />} />
+              <Route path="/orderMain" element={<PurchaseHistory />} />
+            <Route path="/orderDetails" element={<OrderDetails />} />
+            <Route path="/orderHistory" element={<OrderHistory />} />
           </Routes>
           <Footer />
-        </Router>
+        </Router> 
       </ApolloProvider>
     </div>
   );
