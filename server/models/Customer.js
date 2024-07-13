@@ -10,7 +10,7 @@ const customerSchema = new Schema(
       required: true,
       maxlength: 30,
     },
-    lastName: {
+    last_name: {
       type: String,
       required: true,
       maxlength: 30,
