@@ -1,6 +1,6 @@
 // Import the jsonwebtoken module
 const jwt = require('jsonwebtoken');
-const { GraphQLError} = require('graphql');
+const { GraphQLError } = require('graphql');
 
 // Secret key for signing the JWT. Default to 'mysecretsshhhhh' if not provided in environment variables
 const secret = process.env.SECRET || 'mysecretsshhhhh';
@@ -14,9 +14,9 @@ module.exports = {
       },
     }),
   // Function to sign a JWT with customer information
-  signToken: function ({ first_name, last_name, email_address, _id }) {
+  signToken: function ({ first_name, last_name, email, _id }) {
     // Payload containing the customer's first name, last name, email, and ID
-    const payload = { first_name, last_name, email_address, _id };
+    const payload = { first_name, last_name, email, _id };
     // Sign the token with the payload, secret, and expiration time
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },

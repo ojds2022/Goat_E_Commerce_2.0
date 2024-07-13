@@ -15,7 +15,7 @@ const customerSchema = new Schema(
       required: true,
       maxlength: 30,
     },
-    email_address: {
+    email: {
       type: String,
       required: true,
       unique: true,
@@ -49,7 +49,7 @@ customerSchema.pre('save', async function (next) {
 });
 
 // Method to check if the provided password matches the hashed password
-customerSchema.methods.checkPassword = function (password) {
+customerSchema.methods.isCorrectPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 

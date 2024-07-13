@@ -17,7 +17,7 @@ module.exports = {
   // Asynchronous function to log in an existing customer
   async login({ body }, res) {
     // Find a customer in the database by email address
-    const customer = await Customer.findOne({ email_address: body.email });
+    const customer = await Customer.findOne({ email: body.email });
 
     // If no customer is found, send a 400 status response with an error message
     if (!customer) {
