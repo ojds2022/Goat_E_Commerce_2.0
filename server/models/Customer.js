@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 // Define a schema for the Customer model with various fields and their constraints
 const customerSchema = new Schema(
   {
-    firstName: {
+    first_name: {
       type: String,
       required: true,
       maxlength: 30,

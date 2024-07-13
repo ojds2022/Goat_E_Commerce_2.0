@@ -14,9 +14,9 @@ module.exports = {
       },
     }),
   // Function to sign a JWT with customer information
-  signToken: function ({ firstName, lastName, email, _id }) {
+  signToken: function ({ first_name, lastName, email, _id }) {
     // Payload containing the customer's first name, last name, email, and ID
-    const payload = { firstName, lastName, email, _id };
+    const payload = { first_name, lastName, email, _id };
     // Sign the token with the payload, secret, and expiration time
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },

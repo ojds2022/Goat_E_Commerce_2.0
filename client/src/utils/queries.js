@@ -4,7 +4,7 @@ export const QUERY_USER = gql`
   query customer($email: String!) {
     customer(email: $email) {
       _id
-      firstName
+      first_name
       lastName
       email
       }

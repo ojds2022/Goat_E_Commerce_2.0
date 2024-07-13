@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type Customer {
     _id: ID
-    firstName: String
+    first_name: String
     lastName: String
     email: String
   }
@@ -48,7 +48,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    addUser(first_name: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addProduct(
       product_name: String!
@@ -84,7 +84,7 @@ const typeDefs = gql`
   // Define the Customer type
   type Customer {
     _id: ID
-    firstName: String
+    first_name: String
     lastName: String
     email: String
     session_id: String
@@ -126,11 +126,11 @@ const typeDefs = gql`
   // Define the Query type with all the queries
   type Query {
     // Get all customers
-    // Example usage: query { customers { _id, firstName, lastName, email } }
+    // Example usage: query { customers { _id, first_name, lastName, email } }
     customers: [Customer]
 
     // Get a customer by ID
-    // Example usage: query { customer(_id: "60d0fe4f5311236168a109ca") { _id, firstName, lastName, email } }
+    // Example usage: query { customer(_id: "60d0fe4f5311236168a109ca") { _id, first_name, lastName, email } }
     customer(_id: ID!): Customer
 
     // Get all products
@@ -161,16 +161,16 @@ const typeDefs = gql`
   // Define the Mutation type with all the mutations
   type Mutation {
     // Add a new customer
-    // Example usage: mutation { addCustomer(first_name: "John", last_name: "Doe", email: "john.doe@example.com", password: "password123") { token, customer { _id, firstName, lastName, email } } }
+    // Example usage: mutation { addCustomer(first_name: "John", last_name: "Doe", email: "john.doe@example.com", password: "password123") { token, customer { _id, first_name, lastName, email } } }
     addCustomer(
-      firstName: String!
+      first_name: String!
       lastName: String!
       email: String!
       password: String!
     ): Auth
 
     // Customer login
-    // Example usage: mutation { login(email: "john.doe@example.com", password: "password123") { token, customer { _id, firstName, lastName, email } } }
+    // Example usage: mutation { login(email: "john.doe@example.com", password: "password123") { token, customer { _id, first_name, lastName, email } } }
     login(email: String!, password: String!): Auth
 
     // Add a new product

@@ -6,7 +6,7 @@ import Auth from '../utils/auth';
 
 export default function Signup() {
   const [formState, setFormState] = useState({
-    firstName: '',
+    first_name: '',
     lastName: '',
     email: '',
     password: '',
@@ -55,9 +55,9 @@ export default function Signup() {
                 <input
                   className="form-input"
                   placeholder="Your First Name"
-                  name="firstName"
+                  name="first_name"
                   type="text"
-                  value={formState.firstName}
+                  value={formState.first_name}
                   onChange={handleChange}
                 />
                 <input
