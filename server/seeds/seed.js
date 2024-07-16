@@ -15,11 +15,31 @@ db.once('open', async () => {
     await TransactionMain.deleteMany({});
     await TransactionDetail.deleteMany({});
 
-    await Customer.create(customerSeeds);
-    await Product.create(productSeeds);
-    await TransactionDetail.create(transactionDetailSeeds);
-    await TransactionMain.create(transactionMainSeeds);
+    const customer = await Customer.create(customerSeeds);
 
+    const productData = await Product.create(productSeeds);
+
+    for (let i = 0; i < 2; i++) {
+      (transactionMainSeeds[i].customer_id = customer[0]._id);
+    }
+    const transactionMainData = await TransactionMain.create(transactionMainSeeds);
+    
+    for (let i = 0; i < 2; i++) {
+      (transactionDetailSeeds[i].transaction_id = transactionMainData[0]._id);
+    }
+    for (let i =2; i < 5; i++){
+      (transactionDetailSeeds[i].transaction_id = transactionMainData[1]._id);
+    }
+
+    (transactionDetailSeeds[0].product_id = productData[1]._id);
+    (transactionDetailSeeds[4].product_id = productData[1]._id);
+    (transactionDetailSeeds[1].product_id = productData[0]._id);
+    (transactionDetailSeeds[2].product_id = productData[3]._id);
+    (transactionDetailSeeds[3].product_id = productData[3]._id);
+
+    const transactionDetailData = await TransactionDetail.create(transactionDetailSeeds);
+    console.log(transactionDetailData);
+    
   } catch (err) {
     console.error(err);
     process.exit(1);
