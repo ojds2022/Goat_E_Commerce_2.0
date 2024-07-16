@@ -64,8 +64,8 @@ export const GET_TRANSACTIONS = gql`
   }
 `
 export const GET_TRANSACTIONS_BY_ID = gql`
-  query Transaction($_id: ID!) {
-    transaction(_id: $_id) {
+  query transactionDetail($_id: ID!) {
+    transactionDetail(_id: $_id) {
       _id
       transaction_id
       product_id
@@ -76,11 +76,11 @@ export const GET_TRANSACTIONS_BY_ID = gql`
 
 export const GET_TRANSACTIONS_BY_CUSTOMER = gql`
   query transactionMain2($customer_id: ID!) {
-    transaction(_id: $_id) {
+    transactionMain2(customer_id: $customer_id) {
       _id
-      transaction_id
-      product_id
+      customer_id
       ordered
+      total
     }
   }
 `

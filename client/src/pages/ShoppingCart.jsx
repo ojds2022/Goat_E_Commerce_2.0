@@ -4,7 +4,7 @@ import AnyDoubtHat from "../assets/productImages/any-doubt-hat.png";
 import Auth from '../utils/auth'
 import { useEffect } from "react";
 
-import { useQuery, useMutation } from '@apollo/client';
+import { useLazyQuery,useQuery, useMutation } from '@apollo/client';
 
 const loggedIn = true;
 
@@ -21,35 +21,32 @@ const product = [
 export default function ShoppingCart() {
 
     const token = Auth.getProfile();
+    
 
     const { loading, data } = useQuery(QUERY_USER, {
         variables: { email:token.data.email },
     });
 
-    console.log (data);
+    const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
 
+    const userID = data && data.customer._id;
+    console.log(userID);
+    useEffect(()=>{
+        console.log(userID);
+        if(userID){
+            getUserData({ variables: { customer_id: userID } })
+        }
+        
+    },[userID])
     
-    // const gettingUserId = async (event) =>{
-    //     if(data){
-    //         const userID = (data.customer._id);
-    //         console.log(userID);
-    //         return userID;
-    //     }
-    // }
-
-    
-    // async function gettingTransactions (data) {
-    //     const { loading2 , data2 } = useQuery(GET_TRANSACTIONS_BY_CUSTOMER,{
-    //         variables: { customer_id : data}
-    //     })
-    //     console.log(data2);
-    // }
-    
+    console.log(data2)
+    // const dataAfter = data2 && data2.transaction
 
     return (
         <>
         {loggedIn  ? (
             <section className = "container"> 
+
                 <div className = "row">
                     <div className="col-10">
                         <div className = "row">
