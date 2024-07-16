@@ -36,6 +36,9 @@ const resolvers = {
     transactionMain: async (parent, { _id }) => {
       return TransactionMain.findById(_id);
     },
+    transactionMain2: async (parent, {customer_id}) => {
+      return TransactionMain.findById({customer_id:customer_id})
+    },
     // Get all transaction details
     // Example usage: query { transactionsDetail { _id, transaction_id, product_id, ordered } }
     transactionsDetail: async () => {
