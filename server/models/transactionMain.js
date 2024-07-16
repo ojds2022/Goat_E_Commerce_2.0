@@ -5,12 +5,12 @@ const { Schema, model } = require('mongoose');
 const transactionMainSchema = new Schema({
   total: {
     type: Number,
-    required: true, // total is required
+    required: true, 
   },
   customer_id: {
     type: Schema.Types.ObjectId,
     ref: 'Customer', // Reference to the Customer model
-    required: true, // customer_id is required
+    // required: true, // customer_id is required //disabled because of testing
   },
   created_date: {
     type: Date,

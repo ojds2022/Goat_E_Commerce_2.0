@@ -6,12 +6,12 @@ const transactionDetailSchema = new Schema({
   transaction_id: {
     type: Schema.Types.ObjectId,
     ref: 'TransactionMain', // Reference to the TransactionMain model
-    required: true, // transaction_id is required
+    // required: true, // transaction_id is required //disabled due to testing
   },
   product_id: {
     type: Schema.Types.ObjectId,
     ref: 'Product', // Reference to the Product model
-    required: true, // product_id is required
+    // required: true, // product_id is required //disabled due to testing
   },
   ordered: {
     type: Boolean,

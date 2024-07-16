@@ -1,8 +1,13 @@
 import React from "react";
-
+import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
 import AnyDoubtHat from "../assets/productImages/any-doubt-hat.png";
+import Auth from '../utils/auth'
+import { useEffect } from "react";
+
+import { useQuery, useMutation } from '@apollo/client';
 
 const loggedIn = true;
+
 
 const product = [
     { id: 1, name: 'Product 1', price: 10.00, quantity:'2', image: AnyDoubtHat },
@@ -14,9 +19,34 @@ const product = [
 ]
 
 export default function ShoppingCart() {
+
+    const token = Auth.getProfile();
+
+    const { loading, data } = useQuery(QUERY_USER, {
+        variables: { email:token.data.email },
+    });
+
+    
+    const gettingUserId = async (event) =>{
+        if(data){
+            const userID = (data.customer._id);
+            console.log(userID);
+            return userID;
+        }
+    }
+    
+    
+    async function gettingTransactions (data) {
+        const { loading2 , data2 } = useQuery(GET_TRANSACTIONS_BY_CUSTOMER,{
+            variables: { customer_id : data}
+        })
+        console.log(data2);
+    }
+    
+
     return (
         <>
-        {loggedIn  ? ( 
+        {loggedIn  ? (
             <section className = "container"> 
                 <div className = "row">
                     <div className="col-10">
@@ -56,12 +86,12 @@ export default function ShoppingCart() {
                             </div>
                         ))}
                     </div>
-                    <div className = "col-2 orderSummary">
+                    <div className = "col orderSummary">
                         <h2 className = "bold">Order Summary</h2>
                         <p>Order Subtotal: $ </p>
                         <p>Tax: %</p>
                         <p>Total: $</p>
-                        <button type="button" id="backToProduct" className="btn btn-light btn-lg btn-block ">Continue Shopping</button>
+                        <button type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block ">Continue Shopping</button>
                         <button type="button" id="transaction" className="btn btn-dark btn-lg btn-block " >Buy! Buy! Buy!</button>
                     </div>
                 </div>
