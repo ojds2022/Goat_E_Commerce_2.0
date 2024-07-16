@@ -26,22 +26,24 @@ export default function ShoppingCart() {
         variables: { email:token.data.email },
     });
 
+    console.log (data);
+
     
-    const gettingUserId = async (event) =>{
-        if(data){
-            const userID = (data.customer._id);
-            console.log(userID);
-            return userID;
-        }
-    }
+    // const gettingUserId = async (event) =>{
+    //     if(data){
+    //         const userID = (data.customer._id);
+    //         console.log(userID);
+    //         return userID;
+    //     }
+    // }
+
     
-    
-    async function gettingTransactions (data) {
-        const { loading2 , data2 } = useQuery(GET_TRANSACTIONS_BY_CUSTOMER,{
-            variables: { customer_id : data}
-        })
-        console.log(data2);
-    }
+    // async function gettingTransactions (data) {
+    //     const { loading2 , data2 } = useQuery(GET_TRANSACTIONS_BY_CUSTOMER,{
+    //         variables: { customer_id : data}
+    //     })
+    //     console.log(data2);
+    // }
     
 
     return (

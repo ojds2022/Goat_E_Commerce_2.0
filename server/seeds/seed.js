@@ -7,16 +7,13 @@ const customerSeeds = require('./customerData.json');
 const productSeeds = require('./productData.json');
 const transactionDetailSeeds = require('./transactionDetailData.json');
 const transactionMainSeeds = require('./transactionMainData.json');
-const cleanDB = require('./cleanDB');
 
 db.once('open', async () => {
   try {
-
-    await cleanDB('Customer', 'customers');
-    await cleanDB('Product', 'product');
-    await cleanDB('TransactionMain', 'TransactionMain');
-    await cleanDB('TransactionDetail', 'TransactionDetail');
-
+    await Customer.deleteMany({});
+    await Product.deleteMany({});
+    await TransactionMain.deleteMany({});
+    await TransactionDetail.deleteMany({});
 
     await Customer.create(customerSeeds);
     await Product.create(productSeeds);
