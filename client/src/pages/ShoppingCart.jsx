@@ -9,15 +9,12 @@ import { useLazyQuery,useQuery, useMutation } from '@apollo/client';
 const loggedIn = true;
 
 export default function ShoppingCart() {
-    // const [userData, setUserData] = useState([]);
     const token = Auth.getProfile();
-
-    //const navigate = useNavigate();
 
     const { loading, data } = useQuery(QUERY_USER, {
         variables: { email:token.data.email },
     });
-    console.log(data);
+
 
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
     const [getProductTransaction,{data:data3}] =useLazyQuery(GET_TRANSACTIONS_BY_ID);
@@ -40,16 +37,15 @@ export default function ShoppingCart() {
                 transaction_id:data2.transactionMain2[0]._id,
                 ordered:false
             }})
-        }
+        }   
     },[data2])
+    
     
 
     // if(data3){
     //     console.log(data3.transactionDetail);
     // }
-    const [ allProduct, setAllProduct] = useState([]);
-
-    
+    const [allProduct, setAllProduct] = useState([]);
 
     useEffect(() => {
         async function passingData (){
