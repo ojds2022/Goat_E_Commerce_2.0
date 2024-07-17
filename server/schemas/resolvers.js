@@ -32,7 +32,7 @@ const resolvers = {
       return TransactionDetail.findById(_id);
     },
     getTransactionDetails: async (parent, { transaction_id }) => {
-      return TransactionDetail.find({ transaction_id });
+      return TransactionDetail.find({ transaction_id: transaction_id });
     }
   },
   Mutation: {
