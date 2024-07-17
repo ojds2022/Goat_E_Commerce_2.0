@@ -9,6 +9,7 @@ import ShoppingCart from './pages/ShoppingCart';
 import PurchaseHistory from './pages/PurchaseHistory';
 import OrderDetails from './pages/orderDetails';
 import OrderHistory from './pages/OrderHistory'; 
+import OrderComplete from "./pages/OrderComplete";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -50,20 +51,6 @@ const client = new ApolloClient({
 
 export default function App() {
 
-// // testing purposes
-// const {data} = useQuery(GET_CUSTOMERS);
-
-// useEffect(() => {
-//   console.log('here is some data: ', data);
-// }, [data])
-
-// const {data: customer} = useQuery(GET_CUSTOMER_BY_ID, {variables: {_id: "6691aab4bd28d011c8fbcbea"}});
-
-// useEffect(() => {
-//   console.log('here is single customer data: ', customer);
-// }, [customer])
-
-
   return (
     <div className="App">
       <ApolloProvider  client={client} >
@@ -76,8 +63,9 @@ export default function App() {
               <Route exact path="/product/:productId" element={<ProductDetails />} />
               <Route path="/shoppingCart" element={<ShoppingCart />} />
               <Route path="/orderMain" element={<PurchaseHistory />} />
-            <Route path="/orderDetails" element={<OrderDetails />} />
-            <Route path="/orderHistory" element={<OrderHistory />} />
+              <Route path="/orderDetails/:orderId" element={<OrderDetails />} />
+              <Route path="/orderHistory" element={<OrderHistory />} />
+              <Route path="/orderComplete" element={<OrderComplete />} />
           </Routes>
           <Footer />
         </Router> 
