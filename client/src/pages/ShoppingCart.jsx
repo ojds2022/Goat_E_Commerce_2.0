@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER,GET_TRANSACTIONS_BY_ID,GET_PRODUCT_IN_CART} from "../utils/queries";
 import { UPDATING_DATA_AFTER_CART } from "../utils/mutations";
 import Auth from '../utils/auth'
-import { useEffect,useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useLazyQuery,useQuery, useMutation } from '@apollo/client';
 
@@ -89,6 +89,8 @@ export default function ShoppingCart() {
             variables: {customer_id: data.customer._id},
           });
           console.log(mutationResponse);
+
+          window.location.href = '/orderComplete';
         } catch (e) {
           console.log(e);
         }
@@ -147,8 +149,10 @@ export default function ShoppingCart() {
                             </div>
                             <p>Tax: 10%</p>
                             <p>Total: ${(allProduct.reduce((total, { totalPrice }) => total + Number(totalPrice), 0) * 1.1).toFixed(2)}</p>
-                            <button type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block ">Continue Shopping</button>
-                            <button type="button" id="transaction" onClick={updateTransactionIntermediate} className="btn btn-dark btn-lg btn-block " >Buy! Buy! Buy!</button>
+                            <Link to='/'>
+                                <button type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block m-1 fs-6 p-1" style={{width: "150px"}}>Continue Shopping</button>
+                            </Link>
+                            <button type="button" id="transaction" onClick={updateTransactionIntermediate} className="btn btn-dark btn-lg btn-block m-1" style={{width: "150px"}} >Place Order</button>
                         </div>
                     </div>
                 </div>
