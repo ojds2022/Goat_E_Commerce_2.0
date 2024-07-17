@@ -10,7 +10,7 @@
     "client": "cd client && vite",
     "develop": "concurrently \"npm run start\" \"npm run client\"",
     "render-build": "npm install && npm run build",
-    "build": "cd client && npm run build",
+    "build": "vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
