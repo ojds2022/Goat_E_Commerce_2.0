@@ -20,9 +20,12 @@ export default function OrderHistory() {
     });
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error</p>;
+    console.log(data);
+    
     const filteredTransactions = data.transactionMain2.filter(
       (transaction) => transaction.customer_id === customerId && transaction.ordered === true
     );
+
     const handleOrderDetailsClick = (orderId) => {
       navigate(`/orderDetails/${orderId}`, { state: { orderId } });
     };
@@ -40,28 +43,20 @@ export default function OrderHistory() {
                                     <th scope="col3 ">Total</th>
                                 </tr>
                             </thead>
-
-
-                        {filteredTransactions.length > 0 ? (
+                            {filteredTransactions.length && (
                             <tbody>
-                                        {
-                                            filteredTransactions.map((transaction) => (
+                                    {
+                                        filteredTransactions.map((transaction) => (
 
-                                            <tr key={transaction._id}  className="clickableRow" onClick={() => handleOrderDetailsClick(transaction._id)}  >
-                                                <td>{transaction._id}</td>
-                                                <td>10/2023</td>
-                                                <td>${transaction.total}</td>
-                                            </tr> 
-                                        
+                                        <tr key={transaction._id}  className="clickableRow" onClick={() => handleOrderDetailsClick(transaction._id)}  >
+                                            <td>{transaction._id}</td>
+                                            <td>10/2023</td>
+                                            <td>${transaction.total}</td>
+                                        </tr> 
 
-                                            ))
-
-                                         } 
-                            </tbody> )   : (
-                                <p>No orders found.</p>
-                                )}
-
-                           
+                                        ))
+                                    } 
+                            </tbody>)}
                         </table>
                     </div>
                 </div>
