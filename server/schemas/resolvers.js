@@ -19,20 +19,28 @@ const resolvers = {
     transactionsMain: async () => {
       return TransactionMain.find();
     },
-    transactionMain: async (parent, { _id }) => {
-      return TransactionMain.findById(_id);
+    transactionsMain2: async (parent, { customer_id }) => {
+      const getCustomerTransaction = await TransactionMain.find({customer_id: customer_id});
+      return getCustomerTransaction;
     },
-    transactionMain2: async (parent, { customer_id }) => {
-      return TransactionMain.find({ customer_id });
+    transactionMain2: async (parent, {customer_id,ordered}) => {
+
+      const customerTransactions = await TransactionMain.find({customer_id:customer_id, ordered:ordered})
+      return customerTransactions;
     },
     transactionsDetail: async () => {
       return TransactionDetail.find();
     },
-    transactionDetail: async (parent, { _id }) => {
-      return TransactionDetail.findById(_id);
+    transactionDetail: async (parent, { transaction_id,ordered }) => {
+      const customerTransactionsDetails = await TransactionDetail.find({transaction_id:transaction_id,ordered:ordered});
+      return customerTransactionsDetails;
+    },
+    productDataforCart: async (parent, {_id}) => {
+      const productDataReturned = await Product.find({_id:_id});
+      return productDataReturned;
     },
     getTransactionDetails: async (parent, { transaction_id }) => {
-      return TransactionDetail.find({ transaction_id });
+      return TransactionDetail.find({ transaction_id: transaction_id });
     }
   },
   Mutation: {
@@ -47,7 +55,7 @@ const resolvers = {
       if (!customer) {
         throw new AuthenticationError('Incorrect credentials');
       }
-      
+
       const correctPw = await bcrypt.compare(password, customer.password);
 
       if (!correctPw) {
@@ -61,9 +69,8 @@ const resolvers = {
     addProduct: async (parent, args) => {
       return Product.create(args);
     },
-    addTransactionMain: async (parent, { ordered, customer_id, total }) => {
-      const newTransaction = await TransactionMain.create({ total, customer_id, ordered });
-      return newTransaction;
+    addTransactionMain: async (parent, args) => {
+      return TransactionMain.create(args);
     },
     addTransactionDetail: async (parent, args) => {
       return TransactionDetail.create(args);
@@ -75,7 +82,7 @@ const resolvers = {
       );
 
       const transactionIds = await TransactionMain.find({ customer_id, ordered: true }).select('_id');
-      
+
       await TransactionDetail.updateMany(
         { transaction_id: { $in: transactionIds }, ordered: false },
         { ordered: true }

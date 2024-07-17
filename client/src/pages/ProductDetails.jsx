@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ADD_TRANSACTION_MAIN } from "../utils/mutations";
+import { GET_TRANSACTIONSMAIN_BY_CUSTOMER } from "../utils/queries";
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 
@@ -23,6 +24,14 @@ export default function ProductDetails() {
     }
 
     const { product } = location.state;
+
+    // // const checkForShoppingCart = async () => {
+    //     const { data: transactionData } = useQuery(GET_TRANSACTIONSMAIN_BY_CUSTOMER, {
+    //         variables: { customer_id: Auth.getProfile().data._id }
+    //     });
+    //     // if ()
+    //     console.log(transactionData)
+    // // }
 
     const handleAddToCart = async () => {
         navigate(`/shoppingCart`);

@@ -38,7 +38,6 @@ db.once('open', async () => {
     (transactionDetailSeeds[3].product_id = productData[3]._id);
 
     const transactionDetailData = await TransactionDetail.create(transactionDetailSeeds);
-    console.log(transactionDetailData);
     
   } catch (err) {
     console.error(err);
