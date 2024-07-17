@@ -64,8 +64,8 @@ export const GET_TRANSACTIONS = gql`
   }
 `
 export const GET_TRANSACTIONS_BY_ID = gql`
-  query transactionDetail($_id: ID!) {
-    transactionDetail(_id: $_id) {
+  query transactionDetail($transaction_id: ID!,$ordered: Boolean) {
+    transactionDetail(transaction_id: $transaction_id,  ordered: $ordered) {
       _id
       transaction_id
       product_id
@@ -75,8 +75,8 @@ export const GET_TRANSACTIONS_BY_ID = gql`
 `;
 
 export const GET_TRANSACTIONS_BY_CUSTOMER = gql`
-  query transactionMain2($customer_id: ID!) {
-    transactionMain2(customer_id: $customer_id) {
+  query transactionMain2($customer_id: ID!,$ordered: Boolean) {
+    transactionMain2(customer_id: $customer_id, ordered: $ordered) {
       _id
       customer_id
       ordered
@@ -84,7 +84,6 @@ export const GET_TRANSACTIONS_BY_CUSTOMER = gql`
     }
   }
 `
-
 
 
 export const GET_TRANSACTIONSMAIN_BY_CUSTOMER = gql`
@@ -108,3 +107,17 @@ export const GET_TRANSACTION_DETAILS = gql`
   }
 }
 `;
+
+
+
+export const GET_PRODUCT_IN_CART = gql`
+  query productDataforCart($_id:ID!){
+    productDataforCart(_id:$_id){
+      _id
+      product_name
+      product_description
+      product_url
+      price
+    }
+  }
+`

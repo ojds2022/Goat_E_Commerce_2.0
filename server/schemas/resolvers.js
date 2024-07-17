@@ -22,14 +22,21 @@ const resolvers = {
     transactionMain: async (parent, { _id }) => {
       return TransactionMain.findById(_id);
     },
-    transactionMain2: async (parent, { customer_id }) => {
-      return TransactionMain.find({ customer_id });
+    transactionMain2: async (parent, {customer_id,ordered}) => {
+
+      const customerTransactions = await TransactionMain.find({customer_id:customer_id, ordered:ordered})
+      return customerTransactions;
     },
     transactionsDetail: async () => {
       return TransactionDetail.find();
     },
-    transactionDetail: async (parent, { _id }) => {
-      return TransactionDetail.findById(_id);
+    transactionDetail: async (parent, { transaction_id,ordered }) => {
+      const customerTransactionsDetails = await TransactionDetail.find({transaction_id:transaction_id,ordered:ordered});
+      return customerTransactionsDetails;
+    },
+    productDataforCart: async (parent, {_id}) => {
+      const productDataReturned = await Product.find({_id:_id});
+      return productDataReturned;
     },
     getTransactionDetails: async (parent, { transaction_id }) => {
       return TransactionDetail.find({ transaction_id: transaction_id });

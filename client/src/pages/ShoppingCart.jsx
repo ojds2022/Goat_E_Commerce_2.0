@@ -1,25 +1,15 @@
-import React, { useEffect, useNavigate } from "react";
-import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
-import { Link } from "react-router-dom";
-import AnyDoubtHat from "../assets/productImages/any-doubt-hat.png";
-import Auth from '../utils/auth';
+import React from "react";
+import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER,GET_TRANSACTIONS_BY_ID,GET_PRODUCT_IN_CART} from "../utils/queries";
+import { UPDATING_DATA_AFTER_CART } from "../utils/mutations";
+import Auth from '../utils/auth'
+import { useEffect,useState } from "react";
 
 import { useLazyQuery,useQuery, useMutation } from '@apollo/client';
 
 const loggedIn = true;
 
-
-const product = [
-    { id: 1, name: 'Product 1', price: 10.00, quantity:'2', image: AnyDoubtHat },
-    { id: 2, name: 'Product 2', price: 10.00, quantity:'4', image: AnyDoubtHat },
-    { id: 3, name: 'Product 3', price: 10.00, quantity:'5', image: AnyDoubtHat },
-    { id: 4, name: 'Product 4', price: 10.00, quantity:'9', image: AnyDoubtHat },
-    { id: 5, name: 'Product 5', price: 10.00, quantity:'1', image: AnyDoubtHat },
-    { id: 6, name: 'Product 6', price: 10.00, quantity:'8', image: AnyDoubtHat },
-]
-
 export default function ShoppingCart() {
-
+    // const [userData, setUserData] = useState([]);
     const token = Auth.getProfile();
 
     //const navigate = useNavigate();
@@ -30,80 +20,144 @@ export default function ShoppingCart() {
     console.log(data);
 
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
+    const [getProductTransaction,{data:data3}] =useLazyQuery(GET_TRANSACTIONS_BY_ID);
+    const [getProductData,{data:productData}] =useLazyQuery(GET_PRODUCT_IN_CART);
 
     const userID = data && data.customer._id;
-    console.log(userID);
+
     useEffect(()=>{
-        console.log(userID);
         if(userID){
-            getUserData({ variables: { customer_id: userID } })
+            getUserData({ variables: { 
+                customer_id: userID,
+                ordered:false
+            }})
+        }        
+    },[getUserData,userID])
+
+    useEffect(() => {
+        if(data2){
+            getProductTransaction({ variables: {
+                transaction_id:data2.transactionMain2[0]._id,
+                ordered:false
+            }})
+        }
+    },[data2])
+    
+
+    // if(data3){
+    //     console.log(data3.transactionDetail);
+    // }
+    const [ allProduct, setAllProduct] = useState([]);
+
+    
+
+    useEffect(() => {
+        async function passingData (){
+            const allProduct = [];
+            for (let i = 0; i < data3.transactionDetail.length ;i++) {
+                
+                const intermediate = await getProductData({ variables: {
+                    _id:data3.transactionDetail[i].product_id
+                }})
+                if (intermediate){
+                    allProduct.push(intermediate.data.productDataforCart[0]);
+                }
+            }
+            
+            allProduct.sort((a, b) => a.price - b.price);
+            const uniqueAllProduct = allProduct.reduce((uniqueAllProduct,currentValue)=>{
+                if(!uniqueAllProduct[currentValue._id]){
+                    uniqueAllProduct[currentValue._id] = {...currentValue, quantity : 1, totalPrice : 1};
+                }
+                else{
+                    uniqueAllProduct[currentValue._id].quantity += 1;
+                                       
+                }
+                uniqueAllProduct[currentValue._id].totalPrice = uniqueAllProduct[currentValue._id].price * uniqueAllProduct[currentValue._id].quantity; 
+                return uniqueAllProduct
+            },{})
+
+            setAllProduct(Object.values(uniqueAllProduct));
+        }
+        if(data3){
+            passingData();
         }
         
-    },[userID])
-    
-    console.log(data2)
-    // const dataAfter = data2 && data2.transaction
+    },[data3])
 
-    // const handleOrderCompleteClick = () => {  // Saim added this. Trying to send the transaction id to the order complete page.
-    //     navigate(`/orderComplete`, { state: { transaction_id } });
-    // }
+    const [updatetransaction, {error, data:updateTransactionData}] = useMutation(UPDATING_DATA_AFTER_CART)
+    const updateTransactionIntermediate = async (event) => {
+        event.preventDefault();
+        try {
+          const mutationResponse = await  updatetransaction({
+            variables: {customer_id: data.customer._id},
+          });
+          console.log(mutationResponse);
+        } catch (e) {
+          console.log(e);
+        }
+    };
+    
+
 
     return (
         <>
         {loggedIn  ? (
             <section className = "container"> 
-
-                <div className = "row">
-                    <div className="col-10">
+            {allProduct.length && (
+                <div className = "container">
                         <div className = "row">
-                            <div className = "col-3">
-                                <h3>Product and product name</h3>
-                            </div>
-                            <div className="col-2">
-                                <h3>Price</h3>
-                            </div>
-                            <div className="col-2">
-                                <h3>Quantity</h3>
-                            </div>
-                            <div className="col-2">
-                                <h3>Total Cost</h3>
+                        <div className="col-10">
+                            <div className = "row">
+                                <div className = "col-3">
+                                    <h3>Product and product name</h3>
+                                </div>
+                                <div className="col-2">
+                                    <h3>Price</h3>
+                                </div>
+                                <div className="col-2">
+                                    <h3>Quantity</h3>
+                                </div>
+                                <div className="col-2">
+                                    <h3>Total Cost</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className = "row">
-                    <div className="col-10">
-                        {product.map((product) => (
-                            <div key={product.id} className = "row">
-                                <div  className = "col-3">
-                                    <p> {product.id} </p>
-                                    <img src={product.image} style={{ width: '100%', height: 'auto' }} alt="xxx" />
+                    <div className = "row">
+                        <div className="col-10">
+                            {allProduct.map(({product_name,product_url,price,quantity},index) => (
+                                <div key={index} className = "row">
+                                    <div  className = "col-3">
+                                        <p> {product_name} </p>
+                                        <img src={product_url} alt={product_name} style={{ width: '100%', height: 'auto' }} />
+                                    </div>
+                                    <div className="col-2">
+                                        <p>{price}</p>
+                                    </div>
+                                    <div className="col-2">
+                                        <p>{quantity}</p>
+                                    </div>
+                                    <div className="col-2">
+                                        <p>{Number(price) * Number(quantity)}</p>
+                                    </div>
                                 </div>
-                                <div className="col-2">
-                                    <p>{product.price}</p>
-                                </div>
-                                <div className="col-2">
-                                    {product.quantity}
-                                </div>
-                                <div className="col-2">
-                                    <p>$100.00</p>
-                                </div>
+                            ))}
+                        </div>
+                        <div className = "col orderSummary">
+                            
+                            <h2 className = "bold">Order Summary</h2>
+                            <div>Order Subtotal:  {allProduct.reduce((total, { totalPrice }) => total + Number(totalPrice), 0)}
                             </div>
-                        ))}
-                    </div>
-                    <div className = "col orderSummary">
-                        <h2 className = "bold">Order Summary</h2>
-                        <p>Order Subtotal: $ </p>
-                        <p>Tax: %</p>
-                        <p>Total: $</p>
-                        <Link to='/'>
-                            <button type="button" id="backToProduct" className="btn btn-danger p-1">Continue Shopping</button>
-                        </Link>
-                        <Link to='/orderComplete'>
-                            <button type="button" id="transaction" className="btn btn-dark" >Complete Order</button>
-                        </Link>
+                            <p>Tax: 10%</p>
+                            <p>Total: ${(allProduct.reduce((total, { totalPrice }) => total + Number(totalPrice), 0) * 1.1).toFixed(2)}</p>
+                            <button type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block ">Continue Shopping</button>
+                            <button type="button" id="transaction" onClick={updateTransactionIntermediate} className="btn btn-dark btn-lg btn-block " >Buy! Buy! Buy!</button>
+                        </div>
                     </div>
                 </div>
+            )}
+                
 
             </section>
 
