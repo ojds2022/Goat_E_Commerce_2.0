@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import '../styles/signUp.css';
 
 export default function Signup() {
   const [formState, setFormState] = useState({
@@ -40,11 +41,9 @@ export default function Signup() {
 
   return (
     <>
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header p-2">Sign Up</h4>
-          <div className="card-body">
+    <div class="wrapper">
+      <div class="form-box register">
+        <h2>Signup</h2>
             {data ? (
               <p>
                 Success! You may now head{' '}
@@ -52,6 +51,7 @@ export default function Signup() {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
+                <div class ="input-box">
                 <input
                   className="form-input"
                   placeholder="Your First Name"
@@ -60,6 +60,8 @@ export default function Signup() {
                   value={formState.first_name}
                   onChange={handleChange}
                 />
+                </div>
+                <div class ="input-box">
                 <input
                   className="form-input"
                   placeholder="Your Last Name"
@@ -68,6 +70,8 @@ export default function Signup() {
                   value={formState.last_name}
                   onChange={handleChange}
                 />
+                </div>
+                <div class ="input-box">
                 <input
                   className="form-input"
                   placeholder="Your Email"
@@ -76,6 +80,8 @@ export default function Signup() {
                   value={formState.email}
                   onChange={handleChange}
                 />
+                </div>
+                <div class ="input-box">
                 <input
                   className="form-input"
                   placeholder="******"
@@ -84,8 +90,9 @@ export default function Signup() {
                   value={formState.password}
                   onChange={handleChange}
                 />
+                </div>
                 <button
-                  className="btn btn-block btn-primary"
+                  className="change-button btn btn-block btn-primary"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >
@@ -96,13 +103,11 @@ export default function Signup() {
 
             {error && (
               <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
+                {'Signup error.'}
               </div>
             )}
           </div>
-        </div>
       </div>
-    </main>
     </>
   );
 };
