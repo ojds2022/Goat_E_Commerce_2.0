@@ -11,13 +11,23 @@ import '../styles/orderDetails.css';
 export default function OrderDetails() {
   
   const { orderId } = useParams();
-  console.log(orderId);
   const { loading, error, data } = useQuery(GET_TRANSACTION_DETAILS, {
-    variables: { transaction_id: orderId },
+    variables: { transactionId: orderId },
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
-  const details = data.transactionDetails || [];
+  console.log(data);
+
+
+
+
+
+
+
+
+
+  
+  const details = data.getTransactionDetails || [];
     return (
 
     <div className="container mt-5">
@@ -40,10 +50,10 @@ export default function OrderDetails() {
                   </div> */}
 
                   <div className="text col-md-8">
-                    <ul className="list-group">
+                    <ul className="list-group" key={orderId} >
                       <li className="list-group-item"><strong>order: </strong> NAME </li>
                       <li className="list-group-item"><strong>Description: </strong> Disc </li>
-                      <li className="list-group-item"><strong>Total</strong> ${order.price}</li>
+                      <li className="list-group-item"><strong>Total</strong> ${detail.price}</li>
                     </ul>
                   </div>
                 </div>

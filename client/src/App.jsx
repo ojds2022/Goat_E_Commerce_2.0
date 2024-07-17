@@ -63,7 +63,7 @@ export default function App() {
               <Route exact path="/product/:productId" element={<ProductDetails />} />
               <Route path="/shoppingCart" element={<ShoppingCart />} />
               <Route path="/orderMain" element={<PurchaseHistory />} />
-              <Route path="/orderDetails" element={<OrderDetails />} />
+              <Route path="/orderDetails/:orderId" element={<OrderDetails />} />
               <Route path="/orderHistory" element={<OrderHistory />} />
               <Route path="/orderComplete" element={<OrderComplete />} />
           </Routes>
