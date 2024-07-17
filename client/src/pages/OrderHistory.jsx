@@ -1,49 +1,67 @@
-import React from "react";
-import AnyDoubtHat from "../assets/productImages/any-doubt-hat.png";
 
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import AuthService from '../utils/auth';
+import { GET_TRANSACTIONSMAIN_BY_CUSTOMER } from '../utils/queries';
+import '../styles/orderHistory.css';
 
-const product = [
-    { id: 1, name: 'Product 1', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 2, name: 'Product 2', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 3, name: 'Product 3', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 4, name: 'Product 4', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 5, name: 'Product 5', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 6, name: 'Product 6', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 7, name: 'Product 7', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 8, name: 'Product 8', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 9, name: 'Product 9', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 10, name: 'Product 10', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 11, name: 'Product 11', price: 10.00, description: 'product description', image: AnyDoubtHat },
-    { id: 12, name: 'Product 12', price: 10.00, description: 'product description', image: AnyDoubtHat },
-];
-
-const transaction_id = 12345;
 
 
 export default function OrderHistory() {
+    const navigate = useNavigate();
+    const customer = AuthService.getProfile();
+    const customerId = customer ? customer.data._id : null;
+    if (!customerId) {
+      return <p>Error: Customer not found</p>;
+    }
+    const { loading, error, data } = useQuery(GET_TRANSACTIONSMAIN_BY_CUSTOMER, {
+      variables: { customer_id: customerId },
+    });
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error</p>;
+    const filteredTransactions = data.transactionMain2.filter(
+      (transaction) => transaction.customer_id === customerId && transaction.ordered === true
+    );
+    const handleOrderDetailsClick = (orderId) => {
+      navigate(`/orderDetails/${orderId}`, { state: { orderId } });
+    };
     return (
-        <div class="containerFluid mt-5">
-            <h1 class="text-center mb-4">Order History</h1>
-            <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="tableResponsive">
-                        <table class="table tableBordered">
+        <div className="containerFluid mt-5">
+            <h1 className="text-center mb-4">Order History</h1>
+            <div className="row">
+                <div className="col-lg-10 mx-auto">
+                    <div className="tableResponsive">
+                        <table className="table tableBordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">Order ID</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col" >Order ID</th>
+                                    <th scope="col2 ">Date</th>
+                                    <th scope="col3 ">Total</th>
                                 </tr>
                             </thead>
-                            {product.map(order => (
+
+
+                        {filteredTransactions.length > 0 ? (
                             <tbody>
-                                    <tr class="clickableRow" data-href="/orderDetail/{{order.transaction_id}}" target="blank">
-                                        <td>{transaction_id}</td>
-                                        <td>10/2023</td>
-                                        <td>${order.price}</td>
-                                    </tr>   
-                            </tbody>
-                               ))}
+                                        {
+                                            filteredTransactions.map((transaction) => (
+
+                                            <tr key={transaction._id}  className="clickableRow" onClick={() => handleOrderDetailsClick(transaction._id)}  >
+                                                <td>{transaction._id}</td>
+                                                <td>10/2023</td>
+                                                <td>${transaction.total}</td>
+                                            </tr> 
+                                        
+
+                                            ))
+
+                                         } 
+                            </tbody> )   : (
+                                <p>No orders found.</p>
+                                )}
+
+                           
                         </table>
                     </div>
                 </div>
@@ -51,3 +69,7 @@ export default function OrderHistory() {
         </div>
     );
 };
+
+//<button className="btn btn-primary" onClick={() => handleOrderDetailsClick(transaction._id)}>
+//Order Details
+//</button>
