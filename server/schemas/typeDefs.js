@@ -43,10 +43,16 @@ const typeDefs = gql`
     product(_id: ID!): Product
     transactionsMain: [TransactionMain]
     transactionMain(_id: ID!): TransactionMain
-    transactionMain2(customer_id: ID!) : [TransactionMain]
+    transactionMain2(customer_id: ID!,ordered: Boolean) : [TransactionMain]
     transactionsDetail: [TransactionDetail]
-    transactionDetail(_id: ID!): TransactionDetail
+    transactionDetail(transaction_id: ID!,ordered: Boolean):[TransactionDetail]
 
+
+
+
+
+
+    productDataforCart(_id:ID!): [Product]
   }
 
   type Mutation {

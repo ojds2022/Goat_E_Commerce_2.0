@@ -36,9 +36,9 @@ const resolvers = {
     transactionMain: async (parent, { _id }) => {
       return TransactionMain.findById(_id);
     },
-    transactionMain2: async (parent, {customer_id}) => {
+    transactionMain2: async (parent, {customer_id,ordered}) => {
 
-      const customerTransactions = await TransactionMain.find({customer_id:customer_id})
+      const customerTransactions = await TransactionMain.find({customer_id:customer_id, ordered:ordered})
       return customerTransactions;
     },
     // Get all transaction details
@@ -48,9 +48,23 @@ const resolvers = {
     },
     // Get a transaction detail by ID
     // Example usage: query { transactionDetail(_id: "60d0fe4f5311236168a109ca") { _id, transaction_id, product_id, ordered } }
-    transactionDetail: async (parent, { _id }) => {
-      return TransactionDetail.findById(_id);
+    transactionDetail: async (parent, { transaction_id,ordered }) => {
+      const customerTransactionsDetails = await TransactionDetail.find({transaction_id:transaction_id,ordered:ordered});
+      return customerTransactionsDetails;
     },
+
+
+
+
+
+
+
+
+    
+    productDataforCart: async (parent, {_id}) => {
+      const productDataReturned = await Product.find({_id:_id});
+      return productDataReturned;
+    }
   },
   // Define the Mutation resolvers
   Mutation: {
