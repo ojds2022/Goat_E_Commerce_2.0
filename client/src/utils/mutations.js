@@ -37,21 +37,21 @@ export const ADD_PRODUCT = gql`
   }
 `
 export const ADD_TRANSACTION_MAIN = gql`
-  mutation addTransactionMain($total: Float!, $customer_id: ID!, $created_date: String!, $price: Float!) {
-    addTransactionMain(total: $total, customer_id: $customer_id, created_date: $created_date, price: $price) { 
-      total
-      customer_id
-      created_date
+  mutation AddTransactionMain($ordered: Boolean!,  $customer_id: ID!,$total: Float!,) {
+    addTransactionMain(ordered: $ordered,customer_id: $customer_id, total: $total) {
+      _id
       ordered
-    } 
+      customer_id
+      total
   }
+}
 `
 export const ADD_TRANSACTION_DETAIL = gql`
   mutation addTransactionDetail($transaction_id: ID!, $product_id: ID!, $ordered: Boolean!) {
-    addTransactionDetail(transaction_id: $transaction_id, product_id: $product_id, ordered: $ordered) { 
+    addTransactionDetail(transaction_id: $transaction_id, product_id: $product_id, ordered: $ordered) {
       transaction_id
       product_id
       ordered
-    } 
+    }
   }
 `

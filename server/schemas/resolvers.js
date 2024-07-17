@@ -47,7 +47,7 @@ const resolvers = {
       if (!customer) {
         throw new AuthenticationError('Incorrect credentials');
       }
-
+      
       const correctPw = await bcrypt.compare(password, customer.password);
 
       if (!correctPw) {
@@ -61,8 +61,9 @@ const resolvers = {
     addProduct: async (parent, args) => {
       return Product.create(args);
     },
-    addTransactionMain: async (parent, args) => {
-      return TransactionMain.create(args);
+    addTransactionMain: async (parent, { ordered, customer_id, total }) => {
+      const newTransaction = await TransactionMain.create({ total, customer_id, ordered });
+      return newTransaction;
     },
     addTransactionDetail: async (parent, args) => {
       return TransactionDetail.create(args);
@@ -74,7 +75,7 @@ const resolvers = {
       );
 
       const transactionIds = await TransactionMain.find({ customer_id, ordered: true }).select('_id');
-
+      
       await TransactionDetail.updateMany(
         { transaction_id: { $in: transactionIds }, ordered: false },
         { ordered: true }
