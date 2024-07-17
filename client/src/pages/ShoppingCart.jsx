@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useNavigate } from "react";
 import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
+import { Link } from "react-router-dom";
 import AnyDoubtHat from "../assets/productImages/any-doubt-hat.png";
-import Auth from '../utils/auth'
-import { useEffect } from "react";
+import Auth from '../utils/auth';
 
 import { useLazyQuery,useQuery, useMutation } from '@apollo/client';
 
@@ -21,11 +21,13 @@ const product = [
 export default function ShoppingCart() {
 
     const token = Auth.getProfile();
-    
+
+    //const navigate = useNavigate();
 
     const { loading, data } = useQuery(QUERY_USER, {
         variables: { email:token.data.email },
     });
+    console.log(data);
 
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
 
@@ -41,6 +43,10 @@ export default function ShoppingCart() {
     
     console.log(data2)
     // const dataAfter = data2 && data2.transaction
+
+    // const handleOrderCompleteClick = () => {  // Saim added this. Trying to send the transaction id to the order complete page.
+    //     navigate(`/orderComplete`, { state: { transaction_id } });
+    // }
 
     return (
         <>
@@ -90,8 +96,12 @@ export default function ShoppingCart() {
                         <p>Order Subtotal: $ </p>
                         <p>Tax: %</p>
                         <p>Total: $</p>
-                        <button type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block ">Continue Shopping</button>
-                        <button type="button" id="transaction" className="btn btn-dark btn-lg btn-block " >Buy! Buy! Buy!</button>
+                        <Link to='/'>
+                            <button type="button" id="backToProduct" className="btn btn-danger p-1">Continue Shopping</button>
+                        </Link>
+                        <Link to='/orderComplete'>
+                            <button type="button" id="transaction" className="btn btn-dark" >Complete Order</button>
+                        </Link>
                     </div>
                 </div>
 

@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { GET_PRODUCTS } from "../utils/queries";
 import { useQuery } from "@apollo/client";
-
-const loggedIn = true;
+import AuthService from '../utils/auth';
 
 export default function Products() {
+    const loggedIn = AuthService.loggedIn();
     const navigate = useNavigate();
     const { data } = useQuery(GET_PRODUCTS);
 
@@ -18,7 +18,7 @@ export default function Products() {
     return (
         <>
         {loggedIn ? (
-            <section className="container" style={{width: "75%"}}>
+            <section className="container border border-secondary" style={{width: "75%"}}>
                 <div className="row">
                 {products.map((product) => (
                     <div key={product._id} className="col-3 border border-secondary">
