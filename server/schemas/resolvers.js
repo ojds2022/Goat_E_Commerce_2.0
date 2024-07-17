@@ -19,7 +19,7 @@ const resolvers = {
     transactionsMain: async () => {
       return TransactionMain.find();
     },
-    transactionMain: async (parent, { _id }) => {
+    transactionsMain2: async (parent, { _id }) => {
       return TransactionMain.findById(_id);
     },
     transactionMain2: async (parent, {customer_id,ordered}) => {

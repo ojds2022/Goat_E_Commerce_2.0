@@ -87,8 +87,8 @@ export const GET_TRANSACTIONS_BY_CUSTOMER = gql`
 
 
 export const GET_TRANSACTIONSMAIN_BY_CUSTOMER = gql`
-  query transactionMain2($customer_id: ID!) {
-    transactionMain2(customer_id: $customer_id) {
+  query transactionsMain2($customer_id: ID!) {
+    transactionsMain2(customer_id: $customer_id) {
       _id
       customer_id
       ordered
