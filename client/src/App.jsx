@@ -9,6 +9,7 @@ import ShoppingCart from './pages/ShoppingCart';
 import PurchaseHistory from './pages/PurchaseHistory';
 import OrderDetails from './pages/orderDetails';
 import OrderHistory from './pages/OrderHistory'; 
+import OrderComplete from "./pages/OrderComplete";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -76,8 +77,9 @@ export default function App() {
               <Route exact path="/product/:productId" element={<ProductDetails />} />
               <Route path="/shoppingCart" element={<ShoppingCart />} />
               <Route path="/orderMain" element={<PurchaseHistory />} />
-            <Route path="/orderDetails" element={<OrderDetails />} />
-            <Route path="/orderHistory" element={<OrderHistory />} />
+              <Route path="/orderDetails" element={<OrderDetails />} />
+              <Route path="/orderHistory" element={<OrderHistory />} />
+              <Route path="/orderComplete" element={<OrderComplete />} />
           </Routes>
           <Footer />
         </Router> 

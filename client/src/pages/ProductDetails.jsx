@@ -21,12 +21,10 @@ export default function ProductDetails() {
     }
 
     const { product } = location.state;
-    console.log(product);
 
     const getQuantity = () => {
-        const productQuantity = document.querySelector('#product-quantity').value;
+        //const productQuantity = document.querySelector('#product-quantity').value;
         navigate(`/shoppingCart`);
-        console.log(productQuantity)
     }
 
     return (
@@ -39,7 +37,7 @@ export default function ProductDetails() {
                     <h5 id="product-description">{product.product_description}</h5>
                     <h6 id="product-price">Cost: ${product.price}</h6>
                     <div className="product-bought mx-auto" style={{width: "25%"}}>
-                        <input type="number" style={{width: "4em"}} id="product-quantity" placeholder="0"/>
+                        {/* <input type="number" style={{width: "4em"}} id="product-quantity" placeholder="0"/> */}
                         <button onClick={getQuantity} className="btn btn-warning btn-sm mt-2">ADD</button>
                     </div>
                 </div>
