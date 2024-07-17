@@ -40,7 +40,7 @@ const typeDefs = gql`
     transactionMain(_id: ID!): TransactionMain
     transactionMain2(customer_id: ID!,ordered: Boolean) : [TransactionMain]
     transactionsDetail: [TransactionDetail]
-    transactionDetail(_id: ID!): TransactionDetail
+    transactionDetail(transaction_id: ID!, ordered: Boolean): [TransactionDetail]
     getTransactionDetails(transaction_id: ID!): [TransactionDetail]
     productDataforCart(_id:ID!): [Product]
   }
