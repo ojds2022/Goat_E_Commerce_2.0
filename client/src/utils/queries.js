@@ -84,3 +84,27 @@ export const GET_TRANSACTIONS_BY_CUSTOMER = gql`
     }
   }
 `
+
+
+
+export const GET_TRANSACTIONSMAIN_BY_CUSTOMER = gql`
+  query transactionMain2($customer_id: ID!) {
+    transactionMain2(customer_id: $customer_id) {
+      _id
+      customer_id
+      ordered
+      total
+    }
+  }
+`
+
+export const GET_TRANSACTION_DETAILS = gql`
+  query GetTransactionDetails($transaction_id: ID!) {
+    transactionDetails(transaction_id: $transaction_id) {
+      _id
+      product_id
+      transaction_id
+      ordered
+    }
+  }
+`;
