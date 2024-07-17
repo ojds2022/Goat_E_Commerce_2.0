@@ -42,6 +42,7 @@ const typeDefs = gql`
     transactionsDetail: [TransactionDetail]
     transactionDetail(_id: ID!): TransactionDetail
     getTransactionDetails(transaction_id: ID!): [TransactionDetail]
+    productDataforCart(_id:ID!): [Product]
   }
 
   type Mutation {
