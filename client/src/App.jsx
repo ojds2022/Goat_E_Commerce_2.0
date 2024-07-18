@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import ShoppingCart from './pages/ShoppingCart';
-import OrderDetails from './pages/orderDetails';
+import OrderDetails from './pages/OrderDetails';
 import OrderHistory from './pages/OrderHistory';
 import OrderComplete from "./pages/OrderComplete";
 import './App.css';

@@ -19,8 +19,8 @@ const resolvers = {
     transactionsMain: async () => {
       return TransactionMain.find();
     },
-    transactionsMain2: async (parent, { customer_id }) => {
-      return TransactionMain.find({customer_id:customer_id});
+    transactionMain: async (parent, { _id }) => {
+      return TransactionMain.findById(_id);
     },
     transactionMain2: async (parent, {customer_id,ordered}) => {
 
@@ -69,7 +69,8 @@ const resolvers = {
       return Product.create(args);
     },
     addTransactionMain: async (parent, args) => {
-      return TransactionMain.create(args);
+      const addTransactionMain = TransactionMain.create(args);
+      return addTransactionMain;
     },
     addTransactionDetail: async (parent, args) => {
       return TransactionDetail.create(args);

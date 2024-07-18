@@ -99,7 +99,6 @@ export default function ShoppingCart() {
           const mutationResponse = await  updatetransaction({
             variables: {customer_id: data.customer._id},
           });
-          console.log(mutationResponse);
 
           window.location.href = '/orderComplete';
         } catch (e) {

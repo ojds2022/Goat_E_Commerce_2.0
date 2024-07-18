@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ADD_TRANSACTION_MAIN } from "../utils/mutations";
+import { ADD_TRANSACTION_DETAIL } from "../utils/mutations";
 import { GET_TRANSACTIONS_BY_CUSTOMER, QUERY_USER } from "../utils/queries";
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import Auth from '../utils/auth';
 
 const loggedIn = Auth.loggedIn();
@@ -13,7 +13,7 @@ export default function ProductDetails() {
 
     const [getCurrentUser, {data: UserData}] = useLazyQuery(QUERY_USER);
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
-    const [addTransactionMain, {data, loading, error}] = useMutation(ADD_TRANSACTION_MAIN);
+    const [addTransactionDetail, { data: data3, error: error2 }] = useMutation(ADD_TRANSACTION_DETAIL);
 
     const token = Auth.getProfile();
 
@@ -39,7 +39,6 @@ export default function ProductDetails() {
             console.log(e,e.message);
         }
     },[getUserData,userID])
-    console.log('data2: ', data2)
     
     useEffect(() => {
         if (!location.state) {
@@ -54,18 +53,18 @@ export default function ProductDetails() {
     const { product } = location.state;
 
     const handleAddToCart = async () => {
-        navigate(`/`);
         try {
-            const total = product.price;
-            const ordered = false;
+                const ordered = false;
+                const productID = product._id;
 
-            const response = await addTransactionMain({
-                variables: { ordered, customer_id: userID, total }
-            })
+                const response = await addTransactionDetail({
+                    variables: { transaction_id: data2.transactionMain2[0]._id, product_id: productID, ordered }
+                })
         } catch (err) {
             console.error(err);
             alert('Error adding product to cart. Please try again.');
         }
+        navigate(`/shoppingCart`);
     }
 
     return (
