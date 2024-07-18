@@ -4,12 +4,19 @@ import { ADD_TRANSACTION_MAIN } from "../utils/mutations";
 import { GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import Auth from '../utils/auth';
+import { ADD_TRANSACTION_MAIN } from "../utils/mutations";
+import { GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import Auth from '../utils/auth';
 
+const loggedIn = Auth.loggedIn();
 const loggedIn = Auth.loggedIn();
 
 export default function ProductDetails() {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [addTransactionMain, {data, loading, error}] = useMutation(ADD_TRANSACTION_MAIN);
 
     const [addTransactionMain, {data, loading, error}] = useMutation(ADD_TRANSACTION_MAIN);
     
@@ -32,7 +39,7 @@ export default function ProductDetails() {
     // console.log(Auth.getProfile().data._id)
 
     const handleAddToCart = async () => {
-        // navigate(`/shoppingCart`);
+        navigate(`/`);
         try {
             const customer = Auth.getProfile().data;
             const customerId = customer._id;
@@ -81,4 +88,3 @@ export default function ProductDetails() {
         </>
     );
 }
-

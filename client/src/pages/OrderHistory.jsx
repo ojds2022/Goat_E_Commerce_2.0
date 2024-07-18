@@ -1,32 +1,47 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
+import Auth from '../utils/auth';
 import AuthService from '../utils/auth';
-import { GET_TRANSACTIONSMAIN_BY_CUSTOMER } from '../utils/queries';
+import { GET_TRANSACTIONS_BY_CUSTOMER, QUERY_USER } from '../utils/queries';
 import '../styles/orderHistory.css';
 
 export default function OrderHistory() {
-  const navigate = useNavigate();
-  const customer = AuthService.getProfile();
-  const customerId = customer ? customer.data._id : null;
+    const loggedIn = AuthService.loggedIn();
+    const navigate = useNavigate()
+    const [getCurrentUser, {data}] = useLazyQuery(QUERY_USER);
+    const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
 
-  const { loading, error, data } = useQuery(GET_TRANSACTIONSMAIN_BY_CUSTOMER, {
-    variables: { customer_id: customerId },
-    skip: !customerId, // Use the skip option to conditionally skip the query
-  });
+    useEffect(() => {
+        if (loggedIn) {
+            const token = Auth.getProfile();
+            getCurrentUser({
+                variables: { email: token.data.email },
+            });
+        }
+    }, [loggedIn, getCurrentUser]);
 
-  if (!customerId) {
-    return <p>Error: Customer not found</p>;
-  }
+    const userID = data && data.customer._id;
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+    useEffect(()=>{
+        try{
+            if(userID){
+                getUserData({ variables: { 
+                    customer_id: userID,
+                    ordered: true
+                }})
+            }        
+        } catch (e){
+            console.log(e,e.message);
+        }
+    },[getUserData,userID]);
 
   // Ensure data and transactionMain2 are defined
-  const transactions = data?.transactionMain2 || [];
+  const transactions = data2?.transactionMain2 || [];
 
   const filteredTransactions = transactions.filter(
-    (transaction) => transaction.customer_id === customerId && transaction.ordered === true
+    (transaction) => transaction.customer_id === userID && transaction.ordered === true
   );
 
   const handleOrderDetailsClick = (orderId) => {
