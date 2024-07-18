@@ -4,9 +4,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import { GET_TRANSACTION_DETAILS } from '../utils/queries';
-import '../styles/orderDetails.css'; 
-
-
+import '../styles/OrderDetails.css'; 
 
 export default function OrderDetails() {
   
@@ -16,16 +14,6 @@ export default function OrderDetails() {
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
-  console.log(data);
-
-
-
-
-
-
-
-
-
   
   const details = data.getTransactionDetails || [];
     return (
@@ -39,8 +27,6 @@ export default function OrderDetails() {
               Order Number: #{orderId}
             </div>
             <div className="card-body">
-
-
 
             {details.length > 0 ? (
         details.map((detail) => (
