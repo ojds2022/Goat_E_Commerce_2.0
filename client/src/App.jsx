@@ -6,16 +6,11 @@ import Footer from './components/Footer';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import ShoppingCart from './pages/ShoppingCart';
-// import PurchaseHistory from './pages/PurchaseHistory';
 import OrderDetails from './pages/orderDetails';
 import OrderHistory from './pages/OrderHistory'; 
 import OrderComplete from "./pages/OrderComplete";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { useQuery } from "@apollo/client";
-import { GET_CUSTOMERS, GET_CUSTOMER_BY_ID, GET_PRODUCTS } from "./utils/queries";
-import { useEffect } from "react";
 
 import {
   ApolloClient,
@@ -62,7 +57,6 @@ export default function App() {
               <Route exact path="/" element={<Products />} />
               <Route exact path="/product/:productId" element={<ProductDetails />} />
               <Route path="/shoppingCart" element={<ShoppingCart />} />
-              {/* <Route path="/orderMain" element={<PurchaseHistory />} /> */}
               <Route path="/orderDetails/:orderId" element={<OrderDetails />} />
               <Route path="/orderHistory" element={<OrderHistory />} />
               <Route path="/orderComplete" element={<OrderComplete />} />
