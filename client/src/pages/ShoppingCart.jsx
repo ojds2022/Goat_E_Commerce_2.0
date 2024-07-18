@@ -101,6 +101,8 @@ export default function ShoppingCart() {
             variables: {customer_id: data.customer._id},
           });
           console.log(mutationResponse);
+
+          window.location.href = '/orderComplete';
         } catch (e) {
           console.log(e);
         }
@@ -168,6 +170,7 @@ export default function ShoppingCart() {
                                 </div>
                             </div>
                         )}
+
                     </div>
                 ):(
                     <p>No products in cart</p>

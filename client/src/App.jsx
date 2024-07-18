@@ -10,7 +10,9 @@ import OrderDetails from './pages/orderDetails';
 import OrderHistory from './pages/OrderHistory';
 import OrderComplete from "./pages/OrderComplete";
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';import {
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
