@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER,GET_TRANSACTIONS_BY_ID,GET_PRODUCT_IN_CART} from "../utils/queries";
 import { UPDATING_DATA_AFTER_CART } from "../utils/mutations";
 import Auth from '../utils/auth'
 import { useEffect,useState } from "react";
 import {Link} from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
-
-
 
 export default function ShoppingCart() {
     const loggedIn = Auth.loggedIn();
@@ -121,8 +118,8 @@ export default function ShoppingCart() {
                     <div>
                         {allProduct.length && (
                             <div className = "container">
-                                    <div className = "row">
-                                    <div className="col-10">
+                                <div className = "row">
+                                    <div className="col-8">
                                         <div className = "row">
                                             <div className = "col-3">
                                                 <h3>Product and product name</h3>
@@ -140,7 +137,7 @@ export default function ShoppingCart() {
                                     </div>
                                 </div>
                                 <div className = "row">
-                                    <div className="col-10">
+                                    <div className="col-8">
                                         {allProduct.map(({product_name,product_url,price,quantity},index) => (
                                             <div key={index} className = "row">
                                                 <div  className = "col-3">
@@ -159,17 +156,16 @@ export default function ShoppingCart() {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className = "col orderSummary">
-                                        
+                                    <div className = "col-4 orderSummary">
                                         <h2 className = "bold">Order Summary</h2>
                                         <div>Order Subtotal:  {allProduct.reduce((total, { totalPrice }) => total + Number(totalPrice), 0)}
                                         </div>
                                         <p>Tax: 10%</p>
                                         <p>Total: ${(allProduct.reduce((total, { totalPrice }) => total + Number(totalPrice), 0) * 1.1).toFixed(2)}</p>
                                         <Link to ='/'>
-                                            <button type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block ">Continue Shopping</button>
+                                            <button style={{width: "200px"}} type="button" id="backToProduct" className="btn btn-danger btn-lg btn-block ">Continue Shopping</button>
                                         </Link>
-                                        <button type="button" id="transaction" onClick={updateTransactionIntermediate} className="btn btn-dark btn-lg btn-block " >Buy! Buy! Buy!</button>
+                                        <button style={{width: "200px"}} type="button" id="transaction" onClick={updateTransactionIntermediate} className="btn btn-dark btn-lg btn-block " >Buy! Buy! Buy!</button>
                                     </div>
                                 </div>
                             </div>
