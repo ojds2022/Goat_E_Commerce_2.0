@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ADD_TRANSACTION_MAIN } from "../utils/mutations";
-import { GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
+import { GET_TRANSACTIONS_BY_CUSTOMER, QUERY_USER } from "../utils/queries";
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import Auth from '../utils/auth';
 
@@ -11,7 +11,35 @@ export default function ProductDetails() {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const [getCurrentUser, {data: UserData}] = useLazyQuery(QUERY_USER);
+    const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
     const [addTransactionMain, {data, loading, error}] = useMutation(ADD_TRANSACTION_MAIN);
+
+    const token = Auth.getProfile();
+
+    useEffect(() => {
+        if (loggedIn) {
+            getCurrentUser({
+                variables: { email:token.data.email },
+            });
+        }
+    },[loggedIn])
+
+    const userID = UserData && UserData.customer._id;
+
+    useEffect(()=>{
+        try{
+            if(userID){
+                getUserData({ variables: { 
+                    customer_id: userID,
+                    ordered:false
+                }})
+            }        
+        } catch (e){
+            console.log(e,e.message);
+        }
+    },[getUserData,userID])
+    console.log('data2: ', data2)
     
     useEffect(() => {
         if (!location.state) {
@@ -25,28 +53,14 @@ export default function ProductDetails() {
 
     const { product } = location.state;
 
-    // const { data: transactionData } = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER, {
-    //     variables: { customer_id: Auth.getProfile().data._id }
-    // })
-    // console.log(transactionData)
-    // console.log(Auth.getProfile().data._id)
-
     const handleAddToCart = async () => {
         navigate(`/`);
         try {
-            const customer = Auth.getProfile().data;
-            const customerId = customer._id;
-
             const total = product.price;
             const ordered = false;
 
-            // const { data: transactionData } = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER, {
-            //     variables: { customer_id: customerId }
-            // })
-            // console.log(transactionData)
-
             const response = await addTransactionMain({
-                variables: { ordered, customer_id: customerId, total }
+                variables: { ordered, customer_id: userID, total }
             })
         } catch (err) {
             console.error(err);
