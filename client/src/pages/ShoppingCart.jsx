@@ -11,10 +11,10 @@ export default function ShoppingCart() {
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
     const [getProductTransaction,{data:data3}] =useLazyQuery(GET_TRANSACTIONS_BY_ID);
     const [getProductData,{data:productData}] =useLazyQuery(GET_PRODUCT_IN_CART);
-    
-    const token = Auth.getProfile();
+
 
         useEffect(() => {
+            const token = Auth.getProfile();
             if (loggedIn) {
                 getCurrentUser({
                     variables: { email:token.data.email },

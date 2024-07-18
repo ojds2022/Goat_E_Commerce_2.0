@@ -15,9 +15,9 @@ export default function ProductDetails() {
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
     const [addTransactionDetail, { data: data3, error: error2 }] = useMutation(ADD_TRANSACTION_DETAIL);
 
-    const token = Auth.getProfile();
-
     useEffect(() => {
+        const token = Auth.getProfile();
+
         if (loggedIn) {
             getCurrentUser({
                 variables: { email:token.data.email },
