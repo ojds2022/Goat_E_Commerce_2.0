@@ -20,8 +20,7 @@ const resolvers = {
       return TransactionMain.find();
     },
     transactionsMain2: async (parent, { customer_id }) => {
-      const getCustomerTransaction = await TransactionMain.find({customer_id: customer_id});
-      return getCustomerTransaction;
+      return TransactionMain.find({customer_id:customer_id});
     },
     transactionMain2: async (parent, {customer_id,ordered}) => {
 
