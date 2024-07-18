@@ -58,7 +58,6 @@ const typeDefs = gql`
     addTransactionMain(
       total: Float!
       customer_id: ID!
-      created_date: String!
       ordered: Boolean!
     ): TransactionMain
     addTransactionDetail(

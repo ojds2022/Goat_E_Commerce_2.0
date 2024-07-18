@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ADD_TRANSACTION_MAIN } from "../utils/mutations";
-import { GET_TRANSACTIONSMAIN_BY_CUSTOMER } from "../utils/queries";
-import { useMutation } from '@apollo/client';
+import { GET_TRANSACTIONS_BY_CUSTOMER } from "../utils/queries";
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import Auth from '../utils/auth';
 
 const loggedIn = Auth.loggedIn();
@@ -25,22 +25,25 @@ export default function ProductDetails() {
 
     const { product } = location.state;
 
-    // // const checkForShoppingCart = async () => {
-    //     const { data: transactionData } = useQuery(GET_TRANSACTIONSMAIN_BY_CUSTOMER, {
-    //         variables: { customer_id: Auth.getProfile().data._id }
-    //     });
-    //     // if ()
-    //     console.log(transactionData)
-    // // }
+    // const { data: transactionData } = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER, {
+    //     variables: { customer_id: Auth.getProfile().data._id }
+    // })
+    // console.log(transactionData)
+    // console.log(Auth.getProfile().data._id)
 
     const handleAddToCart = async () => {
-        navigate(`/shoppingCart`);
+        // navigate(`/shoppingCart`);
         try {
             const customer = Auth.getProfile().data;
             const customerId = customer._id;
 
             const total = product.price;
             const ordered = false;
+
+            // const { data: transactionData } = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER, {
+            //     variables: { customer_id: customerId }
+            // })
+            // console.log(transactionData)
 
             const response = await addTransactionMain({
                 variables: { ordered, customer_id: customerId, total }
