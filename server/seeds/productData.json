@@ -2,7 +2,7 @@
     {
         "product_name": "Any Doubt? Trucker Hat",
         "product_description" : "RED, GREEN, ANY DOUBT? Adjustable hat for all your doubts.", 
-        "product_url" : "./src/assets/productImages/any-doubt-hat.png", 
+        "product_url" : "../src/assets/productImages/any-doubt-hat.png", 
         "price": "31.99"
     },
     {
