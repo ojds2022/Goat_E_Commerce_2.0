@@ -11,14 +11,16 @@ export default function ShoppingCart() {
     const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
     const [getProductTransaction,{data:data3}] =useLazyQuery(GET_TRANSACTIONS_BY_ID);
     const [getProductData,{data:productData}] =useLazyQuery(GET_PRODUCT_IN_CART);
-    if (loggedIn) {
-        const token = Auth.getProfile();
+    
+    const token = Auth.getProfile();
+
         useEffect(() => {
-            getCurrentUser({
-                variables: { email:token.data.email },
-            });
+            if (loggedIn) {
+                getCurrentUser({
+                    variables: { email:token.data.email },
+                });
+            }
         },[loggedIn])
-    }
 
     const userID = data && data.customer._id;
 
@@ -54,9 +56,6 @@ export default function ShoppingCart() {
         isValidData = false;
     }
 
-    // if(data3){
-    //     console.log(data3.transactionDetail);
-    // }
     const [allProduct, setAllProduct] = useState([]);
 
     useEffect(() => {
