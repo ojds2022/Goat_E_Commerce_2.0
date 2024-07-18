@@ -14,8 +14,9 @@ export default function ShoppingCart() {
 
 
         useEffect(() => {
-            const token = Auth.getProfile();
+
             if (loggedIn) {
+                const token = Auth.getProfile();
                 getCurrentUser({
                     variables: { email:token.data.email },
                 });

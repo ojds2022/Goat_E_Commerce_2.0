@@ -16,9 +16,9 @@ export default function ProductDetails() {
     const [addTransactionDetail, { data: data3, error: error2 }] = useMutation(ADD_TRANSACTION_DETAIL);
 
     useEffect(() => {
-        const token = Auth.getProfile();
 
         if (loggedIn) {
+            const token = Auth.getProfile();
             getCurrentUser({
                 variables: { email:token.data.email },
             });
