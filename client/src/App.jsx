@@ -7,7 +7,7 @@ import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import ShoppingCart from './pages/ShoppingCart';
 import OrderDetails from './pages/orderDetails';
-import OrderHistory from './pages/OrderHistory'; 
+import OrderHistory from './pages/OrderHistory';
 import OrderComplete from "./pages/OrderComplete";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,14 +18,13 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+import { setContext } from '@apollo/client/link/context';// Construct our main GraphQL API endpoint
 
-// Construct our main GraphQL API endpoint
+
 const httpLink = createHttpLink({
   uri: '/graphql',
-});
+});// Construct request middleware that will attach the JWT token to every request as an `authorization` header
 
-// Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
@@ -44,9 +43,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default function App() {
-
-  return (
+export default function App() {  return (
     <div className="App">
       <ApolloProvider  client={client} >
           <Router>
@@ -62,7 +59,7 @@ export default function App() {
               <Route path="/orderComplete" element={<OrderComplete />} />
           </Routes>
           <Footer />
-        </Router> 
+        </Router>
       </ApolloProvider>
     </div>
   );
