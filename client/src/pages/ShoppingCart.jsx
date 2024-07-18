@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { QUERY_USER, GET_TRANSACTIONS_BY_CUSTOMER,GET_TRANSACTIONS_BY_ID,GET_PRODUCT_IN_CART} from "../utils/queries";
 import { UPDATING_DATA_AFTER_CART } from "../utils/mutations";
 import Auth from '../utils/auth'
 import { useEffect,useState } from "react";
 import {Link} from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
+
 
 
 export default function ShoppingCart() {
@@ -103,6 +104,8 @@ export default function ShoppingCart() {
             variables: {customer_id: data.customer._id},
           });
           console.log(mutationResponse);
+
+          window.location.href = '/orderComplete';
         } catch (e) {
           console.log(e);
         }
@@ -171,6 +174,7 @@ export default function ShoppingCart() {
                                 </div>
                             </div>
                         )}
+
                     </div>
                 ):(
                     <p>No products in cart</p>
