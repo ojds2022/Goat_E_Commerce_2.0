@@ -75,10 +75,10 @@ const resolvers = {
     addTransactionDetail: async (parent, args) => {
       return TransactionDetail.create(args);
     },
-    completeTransaction: async (parent, { customer_id }) => {
+    completeTransaction: async (parent, { customer_id, total }) => {
       await TransactionMain.updateMany(
         { customer_id, ordered: false },
-        { ordered: true }
+        { ordered: true, total: total },
       );
 
       const transactionIds = await TransactionMain.find({ customer_id, ordered: true }).select('_id');

@@ -65,7 +65,10 @@ const typeDefs = gql`
       product_id: ID!
       ordered: Boolean!
     ): TransactionDetail
-    completeTransaction(customer_id: ID!): String
+    completeTransaction(
+      customer_id: ID!
+      total: Float!  
+    ): String
   }
 
   type Auth {

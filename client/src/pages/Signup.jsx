@@ -41,8 +41,8 @@ export default function Signup() {
 
   return (
     <>
-    <div class="wrapper">
-      <div class="form-box register">
+    <div className="wrapper">
+      <div className="form-box register">
         <h2>Signup</h2>
             {data ? (
               <p>
@@ -51,7 +51,7 @@ export default function Signup() {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                <div class ="input-box">
+                <div className ="input-box">
                 <input
                   className="form-input"
                   placeholder="Your First Name"
@@ -61,7 +61,7 @@ export default function Signup() {
                   onChange={handleChange}
                 />
                 </div>
-                <div class ="input-box">
+                <div className ="input-box">
                 <input
                   className="form-input"
                   placeholder="Your Last Name"
@@ -71,7 +71,7 @@ export default function Signup() {
                   onChange={handleChange}
                 />
                 </div>
-                <div class ="input-box">
+                <div className ="input-box">
                 <input
                   className="form-input"
                   placeholder="Your Email"
@@ -81,7 +81,7 @@ export default function Signup() {
                   onChange={handleChange}
                 />
                 </div>
-                <div class ="input-box">
+                <div className ="input-box">
                 <input
                   className="form-input"
                   placeholder="******"

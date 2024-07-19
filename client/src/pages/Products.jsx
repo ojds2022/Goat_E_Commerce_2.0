@@ -1,7 +1,8 @@
-import React from "react";
+import { useEffect } from'react';
 import { useNavigate } from "react-router-dom";
-import { GET_PRODUCTS } from "../utils/queries";
-import { useQuery } from "@apollo/client";
+import { GET_PRODUCTS,GET_TRANSACTIONS_BY_CUSTOMER,QUERY_USER } from "../utils/queries";
+import {ADD_TRANSACTION_MAIN} from "../utils/mutations"
+import { useQuery,useLazyQuery, useMutation } from "@apollo/client";
 import AuthService from '../utils/auth';
 
 export default function Products() {
@@ -15,6 +16,55 @@ export default function Products() {
         navigate(`/product/${product._id}`, { state: { product } });
     };
 
+    const [getCurrentUser, {data:data3}] = useLazyQuery(QUERY_USER);
+    const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
+    const [addTransactionMain, {data:data4, error}] = useMutation(ADD_TRANSACTION_MAIN);
+
+    useEffect(() => {
+        if (loggedIn) {
+            const token = AuthService.getProfile();
+            getCurrentUser({
+                variables: { email:token.data.email },
+            });
+        }
+    },[data])
+    
+    const userID = data3 && data3.customer._id;
+
+    useEffect(()=>{
+        try{
+            if(userID){
+                getUserData({ variables: { 
+                    customer_id: userID,
+                    ordered:false
+                }})
+            }
+        } catch (e){
+            console.log(e,e.message);
+        }
+    },[userID])
+    
+    async function intermediate(){
+        const ordered = false;
+        const total = 0;
+        const response = await addTransactionMain({
+            variables: { ordered, customer_id: userID, total }
+        })
+    }
+
+    console.log(data2);
+
+    useEffect(()=>{
+        try{
+            if(data2){
+                intermediate();
+            }        
+        } catch (e){
+            console.log(e,e.message);
+        }
+    },[data2])
+
+    
     return (
         <>
         {loggedIn ? (

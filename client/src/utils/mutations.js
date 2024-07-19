@@ -58,7 +58,7 @@ export const ADD_TRANSACTION_DETAIL = gql`
 
 
 export const UPDATING_DATA_AFTER_CART = gql`
-  mutation completeTransaction($customer_id: ID!){
-    completeTransaction(customer_id: $customer_id)
+  mutation completeTransaction($customer_id: ID!,$total: Float!){
+    completeTransaction(customer_id: $customer_id,total:$total)
   }
 `

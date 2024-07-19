@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ADD_TRANSACTION_DETAIL } from "../utils/mutations";
-import { GET_TRANSACTIONS_BY_CUSTOMER, QUERY_USER } from "../utils/queries";
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { GET_TRANSACTIONS_BY_CUSTOMER, QUERY_USER,GET_PRODUCTS } from "../utils/queries";
+import { useMutation, useLazyQuery, useQuery } from '@apollo/client';
 import Auth from '../utils/auth';
 
 const loggedIn = Auth.loggedIn();
@@ -12,11 +12,16 @@ export default function ProductDetails() {
     const navigate = useNavigate();
 
     const [getCurrentUser, {data: UserData}] = useLazyQuery(QUERY_USER);
-    const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
+    const [getUserData, { data: data2, fetchMore, called, loading, error }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+    });
+    const [hasMore, setHasMore] = useState(true);
     const [addTransactionDetail, { data: data3, error: error2 }] = useMutation(ADD_TRANSACTION_DETAIL);
+    
+    
 
     useEffect(() => {
-
         if (loggedIn) {
             const token = Auth.getProfile();
             getCurrentUser({
@@ -26,19 +31,23 @@ export default function ProductDetails() {
     },[loggedIn])
 
     const userID = UserData && UserData.customer._id;
+    console.log(userID);
 
-    useEffect(()=>{
-        try{
-            if(userID){
-                getUserData({ variables: { 
-                    customer_id: userID,
-                    ordered:false
-                }})
-            }        
-        } catch (e){
-            console.log(e,e.message);
+    useEffect(() => {
+        try {
+            if (userID && hasMore) {
+                getUserData({
+                    variables: {
+                        customer_id: userID,
+                        ordered: false
+                    }
+                });
+            }
+        } catch (e) {
+            console.log(e, e.message);
         }
-    },[getUserData,userID])
+    }, [getUserData, userID, hasMore]);
+
     
     useEffect(() => {
         if (!location.state) {
@@ -60,6 +69,7 @@ export default function ProductDetails() {
                 const response = await addTransactionDetail({
                     variables: { transaction_id: data2.transactionMain2[0]._id, product_id: productID, ordered }
                 })
+
         } catch (err) {
             console.error(err);
             alert('Error adding product to cart. Please try again.');

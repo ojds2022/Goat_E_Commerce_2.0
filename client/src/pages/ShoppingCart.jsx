@@ -8,39 +8,49 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 export default function ShoppingCart() {
     const loggedIn = Auth.loggedIn();
     const [getCurrentUser, {data}] = useLazyQuery(QUERY_USER);
-    const [getUserData, { data:data2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER);
-    const [getProductTransaction,{data:data3}] =useLazyQuery(GET_TRANSACTIONS_BY_ID);
+    const [getUserData, { data: data2, fetchMore, called, loading, error:error2 }] = useLazyQuery(GET_TRANSACTIONS_BY_CUSTOMER, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+    });
+    const [hasMore, setHasMore] = useState(true);
+    const [getProductTransaction, { data: data3, fetchMore:fetchMore2, called:called2, loading:loading2, error:error3 }] = useLazyQuery(GET_TRANSACTIONS_BY_ID, {
+        fetchPolicy: 'cache-and-network',
+        nextFetchPolicy: 'cache-first',
+    });
+    const [hasMore2, setHasMore2] = useState(true);
+
     const [getProductData,{data:productData}] =useLazyQuery(GET_PRODUCT_IN_CART);
 
+    useEffect(() => {
 
-        useEffect(() => {
-
-            if (loggedIn) {
-                const token = Auth.getProfile();
-                getCurrentUser({
-                    variables: { email:token.data.email },
-                });
-            }
-        },[loggedIn])
+        if (loggedIn) {
+            const token = Auth.getProfile();
+            getCurrentUser({
+                variables: { email:token.data.email },
+            });
+        }
+    },[loggedIn])
 
     const userID = data && data.customer._id;
 
-    useEffect(()=>{
-        try{
-            if(userID){
-                getUserData({ variables: { 
-                    customer_id: userID,
-                    ordered:false
-                }})
-            }        
-        } catch (e){
-            console.log(e,e.message);
+    useEffect(() => {
+        try {
+            if (userID && hasMore) {
+                getUserData({
+                    variables: {
+                        customer_id: userID,
+                        ordered: false
+                    }
+                });
+            }
+        } catch (e) {
+            console.log(e, e.message);
         }
-    },[getUserData,userID])
+    }, [getUserData, userID, hasMore2]);
     
     useEffect(() => {
         try{
-            if(data2){
+            if(data2 && hasMore){
                 getProductTransaction({ variables: {
                     transaction_id:data2.transactionMain2[0]._id,
                     ordered:false
@@ -49,7 +59,7 @@ export default function ShoppingCart() {
         } catch (e){
             console.log(e,e.message);
         }
-    },[data2])
+    },[getProductTransaction, data2, hasMore])
 
     let isValidData = true;
 
@@ -96,14 +106,17 @@ export default function ShoppingCart() {
     const [updatetransaction, {error, data:updateTransactionData}] = useMutation(UPDATING_DATA_AFTER_CART)
     const updateTransactionIntermediate = async (event) => {
         event.preventDefault();
+        
         try {
-          const mutationResponse = await  updatetransaction({
-            variables: {customer_id: data.customer._id},
-          });
+            const updateTotal = (allProduct.reduce((total, { totalPrice }) => total + Number(totalPrice), 0) * 1.1).toFixed(2)
+            const mutationResponse = await  updatetransaction({
+                variables: {customer_id: data.customer._id, total: parseFloat(updateTotal)},
+            });
+            console.log(mutationResponse)
 
-          window.location.href = '/orderComplete';
+            window.location.href = '/orderComplete';
         } catch (e) {
-          console.log(e);
+            console.log(e);
         }
     };
     
